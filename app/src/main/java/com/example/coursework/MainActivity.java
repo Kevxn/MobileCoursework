@@ -24,17 +24,22 @@ import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import com.example.coursework.R;
 import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -131,41 +136,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                 public void run() {
                     Log.d("UI thread", "I am the UI thread");
                     try{
-                        List<QuakeItem> quakeItems = new ArrayList<QuakeItem>();
-                        NodeList items = loadXMLFromString(result).getElementsByTagName("item");
-                        Log.e("SizeofItems", Integer.toString(items.getLength()));
-
-                        for (int i=0; i< items.getLength(); i++){
-
-//                            Log.e("Items", items.item(i).getChildNodes().item(0).gette());
-                            Log.e("LoopDebug", items.item(i).getFirstChild().getTextContent() + "");
-                            Log.e("Iteration", Integer.toString(i));
-
-                            Node title = items.item(i).getFirstChild();
-                            Node description = title.getNextSibling();
-                            Node link = description.getNextSibling();
-                            Node pubDate = link.getNextSibling();
-                            Node category = pubDate.getNextSibling();
-                            Node lat = category.getNextSibling();
-                            Node lon = lat.getNextSibling();
-                            // horrible, will likely change later
-
-                            QuakeItem temp = new QuakeItem(title.getTextContent(), description.getTextContent(), link.getTextContent(), pubDate.getTextContent(), category.getTextContent(), Float.parseFloat(lat.getTextContent()), Float.parseFloat(lon.getTextContent()));
-                            quakeItems.add(temp);
-                            // meaty constructor
-                        }
-
-                        Log.e("QuakeItemSize", Integer.toString(quakeItems.size()));
-                        Log.e("ItemObject", items.toString());
-                        NodeList titles = loadXMLFromString(result).getElementsByTagName("title");
-
-                        String display = "";
-                        for (int i=0; i<quakeItems.size(); i++){
-                            display+= "\n" + quakeItems.get(i).title;
-                        }
-
-//                        String title = titles.item(0).getTextContent();
-                        rawDataDisplay.setText(display);
+                        // older code in commit #78639f7d8c07eac14d4c7ab04f900b8e69aa72aa
+                        parseXML(result);
                     }
                     catch (Exception e){
                         Log.e("UI Thread", e.getMessage());
@@ -184,6 +156,82 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             return builder.parse(new ByteArrayInputStream(xml.getBytes()));
             // adapted from shsteimer on StackOverflow,
             // https://stackoverflow.com/questions/562160/in-java-how-do-i-parse-xml-as-a-string-instead-of-a-file
+        }
+
+        private void parseXML(String xml){
+            XmlPullParserFactory pF;
+
+            try{
+                pF = XmlPullParserFactory.newInstance();
+                XmlPullParser p = pF.newPullParser();
+//                InputStream iStream = xml;
+                p.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+                p.setInput(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)), null);
+                startParse(p);
+            }
+            catch (Exception e){
+                Log.e("ParseException", e.getMessage());
+            }
+        }
+
+        private void startParse(XmlPullParser p) throws IOException, XmlPullParserException {
+            ArrayList<QuakeItem> quakes = new ArrayList<>();
+            int eventType = p.getEventType();
+            QuakeItem quake = null;
+
+            while (eventType != XmlPullParser.END_DOCUMENT){
+                String element = null;
+
+                switch (eventType){
+                    case XmlPullParser.START_TAG:
+                        element = p.getName();
+
+                        if (element.equals("item")){
+                            quake = new QuakeItem();
+                            quakes.add(quake);
+                        }
+                        else if (quake != null){
+                            if (element.equals("title")){
+                                quake.title = p.nextText();
+                            }
+                            else if (element.equals("description")){
+                                quake.description = p.nextText();
+                            }
+                            else if (element.equals("link")){
+                                quake.link = p.nextText();
+                            }
+                            else if (element.equals("pubDate")){
+                                quake.pubDate = p.nextText();
+                            }
+                            else if (element.equals("category")){
+                                quake.category = p.nextText();
+                            }
+                            else if (element.equals("geo:lat")){
+                                quake.lat = Float.parseFloat(p.nextText());
+                            }
+                            else if (element.equals("geo:long")){
+                                quake.lon = Float.parseFloat(p.nextText());
+                            }
+                        }
+                        break;
+                }
+                // end of file
+                eventType = p.next();
+            }
+
+            updateTextView(quakes);
+        }
+
+        private void updateTextView(ArrayList<QuakeItem> quakes){
+            StringBuilder b = new StringBuilder();
+
+            for (QuakeItem quake: quakes){
+                b.append(quake.title).append("LAT: ")
+                        .append(quake.lat).append(" LON: ")
+                        .append(quake.lon).append("\n\n");
+            }
+
+            rawDataDisplay.setText(b.toString());
         }
 
     }

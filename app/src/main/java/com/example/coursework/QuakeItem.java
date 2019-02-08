@@ -74,4 +74,8 @@ public class QuakeItem {
         this.lat = lat;
         this.lon = lon;
     }
+
+    public QuakeItem(){
+        // empty constructor
+    }
 }
