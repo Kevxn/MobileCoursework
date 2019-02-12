@@ -14,17 +14,23 @@
 // Update the package name to include your Student Identifier
 package com.example.coursework;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
     private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
 
     private DrawerLayout drawerLayout;
-    public ActionBarDrawerToggle toggle;
+    public ActionBarDrawerToggle barToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -65,13 +72,29 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        drawerLayout = (DrawerLayout)findViewById(R.id.mainDrawer);
+
+        barToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(barToggle);
+        barToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        NavigationView navigationView = findViewById(R.id.drawer);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+
+                int id = menuItem.getItemId();
+                if (id == R.id.home) {
+                    Log.e("Pressed", "Home");
+                }
+                return true;
+            }
+        });
+
+
         // Set up the raw links to the graphical components
         rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
         startButton = (Button)findViewById(R.id.startButton);
@@ -80,8 +103,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         // More Code goes here
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.drawermenuicons, menu);
+//        return true;
+//    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)){
+        if (barToggle.onOptionsItemSelected(item))
+        {
             return true;
         }
         return super.onOptionsItemSelected(item);
