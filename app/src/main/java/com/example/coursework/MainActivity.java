@@ -199,18 +199,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             });
         }
 
-        public Document loadXMLFromString(String xml) throws Exception
-        {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-
-            return builder.parse(new ByteArrayInputStream(xml.getBytes()));
-            // adapted from shsteimer on StackOverflow,
-            // https://stackoverflow.com/questions/562160/in-java-how-do-i-parse-xml-as-a-string-instead-of-a-file
-        }
-
         private void parseXML(String xml){
             XmlPullParserFactory pF;
 
