@@ -134,164 +134,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     public void onClick(View aview)
     {
-        startProgress();
+        DataInterface df = new DataInterface();
+        df.startProgress();
+        updateTextView(df.getQuakeItems());
+        
     }
 
-    public void startProgress()
-    {
-        // Run network access on a separate thread;
-        new Thread(new Task(urlSource)).start();
-    } //
+    private void updateTextView(ArrayList<QuakeItem> quakes){
+        StringBuilder b = new StringBuilder();
 
-    // Need separate thread to access the internet resource over network
-    // Other neater solutions should be adopted in later iterations.
-    private class Task implements Runnable
-    {
-        private String url;
-
-        public Task(String aurl)
-        {
-            url = aurl;
-        }
-        @Override
-        public void run()
-        {
-
-            URL aurl;
-            URLConnection yc;
-            BufferedReader in = null;
-            String inputLine = "";
-
-
-            Log.e("MyTag","in run");
-
-            try
-            {
-                Log.e("MyTag","in try");
-                aurl = new URL(url);
-                yc = aurl.openConnection();
-                in = new BufferedReader(new InputStreamReader(yc.getInputStream(), "UTF-8"));
-                //
-                // Throw away the first 2 header lines before parsing
-                //
-                //
-                //
-                while ((inputLine = in.readLine()) != null)
-                {
-                    result = result + inputLine;
-                    Log.e("MyTag",inputLine);
-
-                }
-                in.close();
-            }
-            catch (IOException ae)
-            {
-                Log.e("MyTag", "ioexception");
-            }
-
-            //
-            // Now that you have the xml data you can parse it
-            //
-
-
-            // Now update the TextView to display raw XML data
-            // Probably not the best way to update TextView
-            // but we are just getting started !
-
-            MainActivity.this.runOnUiThread(new Runnable()
-            {
-                public void run() {
-                    Log.d("UI thread", "I am the UI thread");
-                    try{
-                        // older code in commit #78639f7d8c07eac14d4c7ab04f900b8e69aa72aa
-                        parseXML(result);
-                    }
-                    catch (Exception e){
-                        Log.e("UI Thread", e.getMessage());
-                    }
-                }
-            });
+        for (QuakeItem quake: quakes){
+            b.append(quake.title).append("LAT: ")
+                    .append(quake.lat).append(" LON: ")
+                    .append(quake.lon).append("\n\n");
         }
 
-        private void parseXML(String xml){
-            XmlPullParserFactory pF;
-
-            try{
-                pF = XmlPullParserFactory.newInstance();
-                XmlPullParser p = pF.newPullParser();
-//                InputStream iStream = xml;
-                p.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                p.setInput(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)), null);
-                startParse(p);
-            }
-            catch (Exception e){
-                Log.e("ParseException", e.getMessage());
-            }
-        }
-
-        private void startParse(XmlPullParser p) throws IOException, XmlPullParserException {
-            ArrayList<QuakeItem> quakes = new ArrayList<>();
-            int eventType = p.getEventType();
-            QuakeItem quake = null;
-
-            while (eventType != XmlPullParser.END_DOCUMENT){
-                String element = null;
-
-                switch (eventType){
-                    case XmlPullParser.START_TAG:
-                        element = p.getName();
-
-                        if (element.equals("item")){
-                            quake = new QuakeItem();
-                            quakes.add(quake);
-                        }
-                        else if (quake != null){
-                            if (element.equals("title")){
-                                quake.title = p.nextText();
-                            }
-                            else if (element.equals("description")){
-                                quake.description = p.nextText();
-                            }
-                            else if (element.equals("link")){
-                                quake.link = p.nextText();
-                            }
-                            else if (element.equals("pubDate")){
-                                quake.pubDate = p.nextText();
-                            }
-                            else if (element.equals("category")){
-                                quake.category = p.nextText();
-                            }
-                            else if (element.equals("geo:lat")){
-                                quake.lat = Float.parseFloat(p.nextText());
-                            }
-                            else if (element.equals("geo:long")){
-                                quake.lon = Float.parseFloat(p.nextText());
-                            }
-                        }
-                        break;
-                }
-                // end of file
-                eventType = p.next();
-            }
-
-            updateTextView(quakes);
-            
-        }
-
-        private void updateTextView(ArrayList<QuakeItem> quakes){
-            StringBuilder b = new StringBuilder();
-
-            for (QuakeItem quake: quakes){
-                b.append(quake.title).append("LAT: ")
-                        .append(quake.lat).append(" LON: ")
-                        .append(quake.lon).append("\n\n");
-            }
-
-            rawDataDisplay.setText(b.toString());
-        }
-
+        rawDataDisplay.setText(b.toString());
     }
-
 }

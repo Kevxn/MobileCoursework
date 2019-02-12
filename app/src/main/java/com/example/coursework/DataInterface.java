@@ -20,6 +20,16 @@ public class DataInterface {
     String result = "";
     String parsedXML = "";
     String urlSource = "http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
+    ArrayList<QuakeItem> quakeItems = null;
+
+    public ArrayList<QuakeItem> getQuakeItems(){
+
+        while (quakeItems == null){
+            Log.e("quakeItems null", "");
+        }
+
+        return quakeItems;
+    }
 
     public void startProgress() {
         // Run network access on a separate thread;
@@ -66,6 +76,7 @@ public class DataInterface {
                 Log.e("MyTag", "ioexception");
             }
 
+            quakeItems = parseXML(result);
             parsedXML = parseXML(result).toString();
             Log.e("PARSEDXML", parsedXML);
 
