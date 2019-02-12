@@ -81,15 +81,30 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
 
         NavigationView navigationView = findViewById(R.id.drawer);
+        navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-
-                int id = menuItem.getItemId();
-                if (id == R.id.home) {
-                    Log.e("Pressed", "Home");
+                switch (menuItem.getItemId()){
+                    case R.id.home:
+                        Log.e("Pressed", "Home");
+                        break;
+                    case R.id.search:
+                        Log.e("Pressed", "Search");
+                        break;
+                    case R.id.event:
+                        Log.e("Pressed", "Event");
+                        break;
+                    case R.id.recent:
+                        Log.e("Pressed", "Recent");
+                        break;
                 }
+
+//                int id = menuItem.getItemId();
+//                if (id == R.id.home) {
+//                    Log.e("Pressed", "Home");
+//                }
                 return true;
             }
         });
