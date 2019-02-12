@@ -17,12 +17,16 @@ package com.example.coursework;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
+                Fragment fragment = null;
                 switch (menuItem.getItemId()){
                     case R.id.home:
                         Log.e("Pressed", "Home");
@@ -95,20 +99,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
                         break;
                     case R.id.event:
                         Log.e("Pressed", "Event");
+                        fragment = new EventsFragment();
                         break;
                     case R.id.recent:
                         Log.e("Pressed", "Recent");
                         break;
                 }
 
-//                int id = menuItem.getItemId();
-//                if (id == R.id.home) {
-//                    Log.e("Pressed", "Home");
-//                }
+                if (fragment != null){
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.displayFragment, fragment);
+                    transaction.commit();
+                    drawerLayout.closeDrawer(Gravity.START);
+                }
+
                 return true;
             }
         });
-
 
         // Set up the raw links to the graphical components
         rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
@@ -117,13 +125,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
         // More Code goes here
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.drawermenuicons, menu);
-//        return true;
-//    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (barToggle.onOptionsItemSelected(item))
@@ -276,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             }
 
             updateTextView(quakes);
+            
         }
 
         private void updateTextView(ArrayList<QuakeItem> quakes){
