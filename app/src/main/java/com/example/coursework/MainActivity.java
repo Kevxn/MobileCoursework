@@ -1,15 +1,8 @@
-
-/*  Starter project for Mobile Platform Development in Semester B Session 2018/2019
-    You should use this project as the starting point for your assignment.
-    This project simply reads the data from the required URL and displays the
-    raw data in a TextField
+/*
+    Name                 Kevin Gray
+    Student ID           S1715611
+    Programme of Study   BSc Computing
 */
-
-//
-// Name                 _________________
-// Student ID           _________________
-// Programme of Study   _________________
-//
 
 // Update the package name to include your Student Identifier
 package com.example.coursework;
@@ -58,17 +51,10 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener
+public class MainActivity extends AppCompatActivity
 {
-    private TextView rawDataDisplay;
-    private Button startButton;
-    private String result = "";
-    private String url1="";
-    private String urlSource="http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
-
     private DrawerLayout drawerLayout;
     public ActionBarDrawerToggle barToggle;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,8 +62,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        drawerLayout = (DrawerLayout)findViewById(R.id.mainDrawer);
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().
+                    beginTransaction().replace(R.id.displayFragment, new HomeFragment()).commit();
+        }
 
+        // below is setup code for the navigation menu
+        drawerLayout = (DrawerLayout)findViewById(R.id.mainDrawer);
         barToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(barToggle);
         barToggle.syncState();
@@ -85,45 +76,47 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
 
 
         NavigationView navigationView = findViewById(R.id.drawer);
-        navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment = null;
-                switch (menuItem.getItemId()){
-                    case R.id.home:
-                        Log.e("Pressed", "Home");
-                        break;
-                    case R.id.search:
-                        Log.e("Pressed", "Search");
-                        break;
-                    case R.id.event:
-                        Log.e("Pressed", "Event");
-                        fragment = new EventsFragment();
-                        break;
-                    case R.id.recent:
-                        Log.e("Pressed", "Recent");
-                        break;
-                }
+                navigationView.bringToFront();
+                navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        Fragment fragment = null;
+                        switch (menuItem.getItemId()){
+                            case R.id.home:
+                                Log.e("Pressed", "Home");
+                                fragment = new HomeFragment();
+                                break;
+                            case R.id.search:
+                                Log.e("Pressed", "Search");
+                                fragment = new SearchFragment();
+                                break;
+                            case R.id.event:
+                                Log.e("Pressed", "Event");
+                                fragment = new EventsFragment();
+                                break;
+                            case R.id.recent:
+                                Log.e("Pressed", "Recent");
+                                fragment = new RecentFragment();
+                                break;
+                        }
 
-                if (fragment != null){
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.displayFragment, fragment);
-                    transaction.commit();
-                    drawerLayout.closeDrawer(Gravity.START);
-                }
+                        if (fragment != null){
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            transaction.replace(R.id.displayFragment, fragment);
+                            transaction.commit();
+                            drawerLayout.closeDrawer(Gravity.START);
+                        }
 
-                return true;
+                        return true;
             }
         });
+        // setup code for elements that were originally in activity_main.xml
+        // have moved into home_fragment.xml
+    }
 
-        // Set up the raw links to the graphical components
-        rawDataDisplay = (TextView)findViewById(R.id.rawDataDisplay);
-        startButton = (Button)findViewById(R.id.startButton);
-        startButton.setOnClickListener(this);
-
-        // More Code goes here
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -132,26 +125,5 @@ public class MainActivity extends AppCompatActivity implements OnClickListener
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View aview)
-    {
-        DataInterface df = new DataInterface();
-        df.startProgress();
-        updateTextView(df.getQuakeItems());
-        
-    }
-
-    private void updateTextView(ArrayList<QuakeItem> quakes){
-        StringBuilder b = new StringBuilder();
-
-        for (QuakeItem quake: quakes){
-            b.append(quake.title).append("LAT: ")
-                    .append(quake.lat).append(" LON: ")
-                    .append(quake.lon).append("\n\n");
-        }
-
-        rawDataDisplay.setText(b.toString());
     }
 }

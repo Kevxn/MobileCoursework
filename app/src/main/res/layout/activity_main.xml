@@ -30,45 +30,45 @@
         android:orientation="vertical">
     </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
 
-            <TextView
-                android:id="@+id/salutation"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Welcome to Mobile Platform Development"
-                android:textSize="20sp"
-                android:layout_marginTop="55dp"/>
+            <!--<TextView-->
+                <!--android:id="@+id/salutation"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Welcome to Mobile Platform Development"-->
+                <!--android:textSize="20sp"-->
+                <!--android:layout_marginTop="55dp"/>-->
 
-            <Button
-                android:id="@+id/startButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Press to get data" />
+            <!--<Button-->
+                <!--android:id="@+id/startButton"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Press to get data" />-->
 
-            <TextView
-                android:id="@+id/acknowledgement"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Contains British Geological Survey materials ©NERC 2019"
-                android:textSize="20sp" />
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!--<TextView-->
+                <!--android:id="@+id/acknowledgement"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Contains British Geological Survey materials ©NERC 2019"-->
+                <!--android:textSize="20sp" />-->
+            <!--<ScrollView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
 
-                <TextView
-                    android:id="@+id/rawDataDisplay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Raw Data is Displayed here"
-                    android:textSize="20sp" />
-            </ScrollView>
+                <!--<TextView-->
+                    <!--android:id="@+id/rawDataDisplay"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Raw Data is Displayed here"-->
+                    <!--android:textSize="20sp" />-->
+            <!--</ScrollView>-->
 
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
     <!--</LinearLayout>-->
 
 

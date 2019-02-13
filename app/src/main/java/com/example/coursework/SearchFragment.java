@@ -7,25 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-public class EventsFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Events");
-        return inflater.inflate(R.layout.events_fragment, null);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Search");
+        return inflater.inflate(R.layout.search_fragment, null);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.btnEvent).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Toast.makeText(getActivity(), "Selected Events..", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
