@@ -14,6 +14,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataInterface {
 
@@ -68,7 +70,7 @@ public class DataInterface {
                 //
                 while ((inputLine = in.readLine()) != null) {
                     result = result + inputLine;
-                    Log.e("MyTag", inputLine);
+                    //Log.e("MyTag", inputLine);
 
                 }
                 in.close();
@@ -148,6 +150,4 @@ public class DataInterface {
 
         return quakes;
     }
-
-
 }

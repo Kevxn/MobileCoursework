@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,21 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view){
                 Toast.makeText(getActivity(), "Getting data...", Toast.LENGTH_SHORT).show();
-                DataInterface df = new DataInterface();
-                df.startProgress();
-                updateTextView(txtShowData, df.getQuakeItems());
+                DataInterface data = new DataInterface();
+                data.startProgress();
+                updateTextView(txtShowData, data.getQuakeItems());
+
+
+
+
+
+                QuakeItem i = new QuakeItem();
+                ArrayList<QuakeItem> temp = data.getQuakeItems() ;
+
+                for (QuakeItem item: temp){
+                    Log.e("TESTING NEW CODE", i.cleanParsedData(item).toString());
+                }
+
             }
 
         });
