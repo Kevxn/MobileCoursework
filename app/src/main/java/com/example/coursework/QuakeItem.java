@@ -19,8 +19,35 @@ public class QuakeItem {
     public String category;
     public float lat;
     public float lon;
+    public String location;
+    public float magnitude;
+    public float depth;
     public Date date;
 
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public float getMagnitude() {
+        return magnitude;
+    }
+
+    public void setMagnitude(float magnitude) {
+        this.magnitude = magnitude;
+    }
+
+    public float getDepth() {
+        return depth;
+    }
+
+    public void setDepth(float depth) {
+        this.depth = depth;
+    }
 
     public Date getDate() {
         return date;
@@ -92,6 +119,15 @@ public class QuakeItem {
         this.link = link;
         this.pubDate = pubDate;
         this.category = category;
+        this.lat = lat;
+        this.lon = lon;
+    }
+
+    public QuakeItem(String location, Date date, float depth, float magnitude, float lat, float lon){
+        this.location = location;
+        this.date = date;
+        this.depth = depth;
+        this.magnitude = magnitude;
         this.lat = lat;
         this.lon = lon;
     }

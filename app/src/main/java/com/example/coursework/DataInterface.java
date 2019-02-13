@@ -14,6 +14,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,6 +89,7 @@ public class DataInterface {
     private ArrayList<QuakeItem> parseXML(String xml){
         XmlPullParserFactory pF;
         ArrayList<QuakeItem> quakes = null;
+        ArrayList<QuakeItem> javaQuakes = null;
 
         try{
             pF = XmlPullParserFactory.newInstance();
@@ -95,12 +97,13 @@ public class DataInterface {
             p.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             p.setInput(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)), null);
             quakes = startParse(p);
+            javaQuakes = quakeStringToJavaType(quakes);
         }
         catch (Exception e){
             Log.e("ParseException", e.getMessage());
         }
 
-        return quakes;
+        return javaQuakes;
     }
 
     private ArrayList<QuakeItem> startParse(XmlPullParser p) throws IOException, XmlPullParserException {
@@ -149,5 +152,42 @@ public class DataInterface {
         }
 
         return quakes;
+    }
+
+    private ArrayList<QuakeItem> quakeStringToJavaType(ArrayList<QuakeItem> quakes){
+
+        ArrayList<QuakeItem> listOfQuakes = new ArrayList<>();
+        // ArrayList<HashMap> listOfMaps = new ArrayList<>();
+        // this is a list of Items
+
+        for (QuakeItem quake: quakes){
+
+            QuakeItem q = new QuakeItem();
+            HashMap<Object, Object> temp = quake.cleanParsedData(quake);
+
+            for (HashMap.Entry<Object, Object> entry : temp.entrySet()) {
+               if ("location".equals(entry.getKey())){
+                   q.setLocation((String)entry.getValue());
+               }
+               else if("date".equals(entry.getKey())){
+                   q.setDate((Date)entry.getValue());
+               }
+               else if("depth".equals(entry.getKey())){
+                   q.setDepth((float) entry.getValue());
+               }
+               else if("magnitude".equals(entry.getKey())){
+                   q.setMagnitude((float)entry.getValue());
+               }
+               else if("lat".equals(entry.getKey())){
+                   q.setLat((float)entry.getValue());
+               }
+               else if("lon".equals(entry.getKey())){
+                   q.setLon((float)entry.getValue());
+               }
+
+            }
+            listOfQuakes.add(q);
+        }
+        return listOfQuakes;
     }
 }

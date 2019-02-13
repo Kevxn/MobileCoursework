@@ -69,6 +69,7 @@
                     >
 
                     <LinearLayout
+                        android:id="@+id/home_card_holder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
 
@@ -42,17 +43,6 @@ public class HomeFragment extends Fragment {
                 data.startProgress();
                 updateTextView(txtShowData, data.getQuakeItems());
 
-
-
-
-
-                QuakeItem i = new QuakeItem();
-                ArrayList<QuakeItem> temp = data.getQuakeItems() ;
-
-                for (QuakeItem item: temp){
-                    Log.e("TESTING NEW CODE", i.cleanParsedData(item).toString());
-                }
-
             }
 
         });
@@ -62,11 +52,13 @@ public class HomeFragment extends Fragment {
         StringBuilder b = new StringBuilder();
 
         for (QuakeItem quake: quakes){
-            b.append(quake.title).append("LAT: ")
-                    .append(quake.lat).append(" LON: ")
-                    .append(quake.lon).append("\n\n");
+            b.append("Location: ").append(quake.getLocation()).append("\nLAT: ")
+                    .append(quake.getLat()).append("\nLON: ")
+                    .append(quake.getLon()).append("\nDATE: ")
+                    .append(quake.getDate()).append("\nDEPTH: ")
+                    .append(quake.getDepth()).append("\nMAGNITUDE: ")
+                    .append(quake.getMagnitude()).append("\n\n");
         }
-
         txt.setText(b.toString());
     }
 
