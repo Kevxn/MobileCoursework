@@ -219,7 +219,7 @@ public class QuakeItem {
             }
 
         }
-        Log.e("typedMap", typedMap.toString()); // empty
+        Log.e("typedMap", typedMap.toString());
         return typedMap;
     }
 }

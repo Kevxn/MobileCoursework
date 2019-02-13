@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final TextView txtShowData = view.findViewById(R.id.txtDisplayData);
+        final LinearLayout layout = view.findViewById(R.id.home_card_holder);
         view.findViewById(R.id.homeBtnGetData).setOnClickListener(new View.OnClickListener() {
 
 
@@ -41,8 +44,9 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "Getting data...", Toast.LENGTH_SHORT).show();
                 DataInterface data = new DataInterface();
                 data.startProgress();
-                updateTextView(txtShowData, data.getQuakeItems());
+                ArrayList<QuakeItem> items = data.getQuakeItems();
 
+                updateTextView(txtShowData, items);
             }
 
         });
