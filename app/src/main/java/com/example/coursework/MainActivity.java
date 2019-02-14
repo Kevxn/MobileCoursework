@@ -98,6 +98,9 @@ public class MainActivity extends AppCompatActivity
                                 Log.e("Pressed", "Recent");
                                 fragment = new RecentFragment();
                                 break;
+                            case R.id.map:
+                                Log.e("Pressed", "Map");
+                                fragment = new MapFragment();
                         }
 
                         if (fragment != null){
