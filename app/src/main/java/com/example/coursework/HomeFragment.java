@@ -35,12 +35,13 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final TextView txtShowData = view.findViewById(R.id.txtDisplayData);
-        final LinearLayout layout = view.findViewById(R.id.home_card_holder);
+//        final LinearLayout layout = view.findViewById(R.id.home_card_holder);
         view.findViewById(R.id.homeBtnGetData).setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View view){
+
                 Toast.makeText(getActivity(), "Getting data...", Toast.LENGTH_SHORT).show();
                 DataInterface data = new DataInterface();
                 data.startProgress();

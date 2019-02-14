@@ -195,7 +195,7 @@ public class QuakeItem {
 
                 //splitting value
                 try{
-                    // trying to parse from float to string
+                    // trying to parse from String to float
                     String[] latAndLongValue = entry.getValue().split(",");
                     float latVal = Float.parseFloat(latAndLongValue[0]);
                     float longVal = Float.parseFloat(latAndLongValue[1].trim());
