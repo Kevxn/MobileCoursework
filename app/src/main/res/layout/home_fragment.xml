@@ -82,28 +82,28 @@
                             android:fontFamily="@font/montserrat"
                             android:gravity="center"
                             android:paddingTop="10dp"
-                            android:text="KINGSTONE, HEREFORDSHIRE"
+                            android:text="Events"
                             android:textColor="#ffffff" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/montserrat"
                             android:gravity="center"
                             android:paddingTop="10dp"
-                            android:text="20th Jan 2019"
+                            android:text="View all seismic events from the British Isles and surrounding areas"
                             android:textColor="#ffffff" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/montserrat"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="Magnitude: 1.0"
-                            android:textColor="#ffffff" />
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="50dp"-->
+                            <!--android:layout_gravity="center_vertical"-->
+                            <!--android:fontFamily="@font/montserrat"-->
+                            <!--android:gravity="center"-->
+                            <!--android:paddingTop="10dp"-->
+                            <!--android:text="Magnitude: 1.0"-->
+                            <!--android:textColor="#ffffff" />-->
 
                     </LinearLayout>
 

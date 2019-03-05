@@ -77,6 +77,7 @@ public class DataInterface {
                 in.close();
             } catch (IOException ae) {
                 Log.e("MyTag", "ioexception");
+                Log.e("ioexception", ae.getMessage());
             }
 
             quakeItems = parseXML(result);

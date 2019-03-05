@@ -2,4 +2,11 @@
     <string name="app_name">coursework</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string-array name="recent_limiter">
+        <item>10</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
+    </string-array>
 </resources>
