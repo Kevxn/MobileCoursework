@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="Limit Results"
+            android:text="Show most recent..."
             android:layout_weight="1" />
 
         <Spinner

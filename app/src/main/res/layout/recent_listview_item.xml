@@ -23,6 +23,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:drawableLeft="@drawable/ic_baseline_location_on_24px"
+            android:drawablePadding="2dp"
             tools:context=".MainActivity" />
 
         <TextView
@@ -37,6 +38,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:drawableLeft="@drawable/ic_baseline_date_range_24px"
+            android:drawablePadding="4dp"
             app:layout_constraintBottom_toTopOf="@+id/txt_recent_LatLon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_recent_Location" />
@@ -54,6 +56,7 @@
             android:layout_marginLeft="50dp"
             android:textColor="@color/black"
             android:gravity="center"
+            android:drawablePadding="4dp"
             android:drawableLeft="@drawable/ic_baseline_gps_fixed_24px" />
 
         <TextView

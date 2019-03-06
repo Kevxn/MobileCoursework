@@ -50,7 +50,7 @@ public class EarthquakeListViewAdapter extends BaseAdapter {
         txtLocation.setText(q.getLocation());
         txtMagnitude.setText(Float.toString(q.getMagnitude()));
         txtDate.setText(q.getDate().toString());
-        txtLatLon.setText(q.getLat() + ", " + q.getLon());
+        txtLatLon.setText(q.getLat() + "°,  " + q.getLon() + "°");
 
         float mag = q.getMagnitude();
         setQuakeColour(txtMagnitude, mag);
