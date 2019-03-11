@@ -75,7 +75,7 @@ public class EventsFragment extends Fragment {
 
     // this function gets the distance between 2 points taking
     // Earths curvature into account
-    private double getOrthodromicDistance(double x1, double x2, double y1, double y2){
+    private double getOrthodromicDistance(double x1, double y1, double x2, double y2){
 
         double lon1 = Math.toRadians(x1);
         double lon2 = Math.toRadians(x2);
