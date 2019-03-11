@@ -11,9 +11,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +28,34 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class EventsFragment extends Fragment {
+
+    Spinner spinner;
+    ListView lv;
+    TextView noQuakeFoundLabel;
+    double lat;
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    double lon;
 
     private FusedLocationProviderClient client;
     @Nullable
@@ -31,15 +65,41 @@ public class EventsFragment extends Fragment {
         return inflater.inflate(R.layout.events_fragment, null);
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // spinner setup code
+        spinner = (Spinner)view.findViewById(R.id.nearby_radius_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.nearby_radius, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        // end spinner setup code
+
+
+        final DataInterface data = new DataInterface();
+        data.startProgress();
+
+        lv = (ListView) view.findViewById(R.id.recentNearbyEvents);
+        noQuakeFoundLabel = (TextView) view.findViewById(R.id.nearby_event_no_quakes_found);
+
+        final ProgressBar progressBar = view.findViewById(R.id.nearbyEventsLoading);
+        final LinearLayout header = view.findViewById(R.id.nearby_event_item_list_header);
+        header.setVisibility(View.GONE);
+        final LinearLayout itemList = view.findViewById(R.id.nearby_event_item_list_layout);
+        itemList.setVisibility(View.GONE);
+        progressBar.isIndeterminate();
+
+        // start geolocation code
         requestPermission();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
         Context mContext = (MainActivity)getActivity();
-        final TextView showCoords = view.findViewById(R.id.nearby_events_show_coords);
+        // final TextView showCoords = view.findViewById(R.id.nearby_events_show_coords);
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
             return;
@@ -51,17 +111,66 @@ public class EventsFragment extends Fragment {
                     String lat = Double.toString(location.getLatitude());
                     String lon = Double.toString(location.getLongitude());
                     // Toast.makeText(getActivity(), lat + ", " + lon, Toast.LENGTH_SHORT).show();
-                    showCoords.setText(lat + ", " + lon);
+                    // showCoords.setText(lat + ", " + lon);
+                    setLat(location.getLatitude());
+                    setLon(location.getLongitude());
                 }
             }
         });
 
-        view.findViewById(R.id.btnEvent).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                // Toast.makeText(getActivity(), "Selected Nearby Events..", Toast.LENGTH_SHORT).show();
+        new Thread(new Runnable() {
+
+            ArrayList<QuakeItem> items;
+            public void run() {
+                items=data.getQuakeItems();
+                try{
+                    if (items == null){
+                        // show loading
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.VISIBLE);
+                                noQuakeFoundLabel.setVisibility(View.GONE);
+                                header.setVisibility(View.GONE);
+                                itemList.setVisibility(View.GONE);
+                            }
+                        });
+
+                    }
+                    else{
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                                noQuakeFoundLabel.setVisibility(View.GONE);
+                                header.setVisibility(View.VISIBLE);
+                                itemList.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }
+                catch(Exception ex){
+                    Log.e("THREAD BROKEN: ", ex.getMessage());
+                }
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        fillListView(items, Integer.parseInt(parent.getSelectedItem().toString()), getLat(), getLon());
+                        // parent.getSelectedItem().toString();
+                        Log.e("SELECTED: ", parent.getSelectedItem().toString());
+                        Log.e("LAT FROM DEVICE: ", Double.toString(getLat()));
+                        Log.e("LON FROM DEVICE: ", Double.toString(getLon()));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
-        });
+
+        }).start();
     }
 
     private void requestPermission(){
@@ -91,5 +200,37 @@ public class EventsFragment extends Fragment {
         double earthRadiusKM = 6371;
 
         return c * earthRadiusKM;
+    }
+
+    public void fillListView(ArrayList<QuakeItem> items, int searchRadius, double userLat, double userLon){
+
+        // int selectedValue = 50;
+
+        Collections.sort(items, new Comparator<QuakeItem>() {
+            @Override
+            public int compare(QuakeItem o1, QuakeItem o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        // items = new ArrayList<QuakeItem>(items.subList(0, selectedValue));
+        ArrayList<QuakeItem> displayItems = new ArrayList<>();
+        for(QuakeItem i: items){
+            double distance = getOrthodromicDistance(userLat, userLon, i.getLat(), i.getLon());
+            if (distance <= searchRadius){
+                displayItems.add(i);
+            }
+        }
+
+        EarthquakeListViewAdapter adapter = new EarthquakeListViewAdapter(getActivity(), displayItems);
+
+        if (adapter.getCount() == 0){
+            noQuakeFoundLabel.setText("Couldn't find any earthquakes in a " + Double.toString(searchRadius) + "km radius.");
+            noQuakeFoundLabel.setVisibility(View.VISIBLE);
+        }
+        else{
+            lv.setAdapter(adapter);
+            noQuakeFoundLabel.setVisibility(View.GONE);
+        }
     }
 }
