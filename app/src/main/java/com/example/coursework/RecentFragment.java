@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -45,29 +47,69 @@ public class RecentFragment extends Fragment {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        DataInterface data = new DataInterface();
+        final DataInterface data = new DataInterface();
         data.startProgress();
-        final ArrayList<QuakeItem> items = data.getQuakeItems();
-
-        //view.findViewById(R.id.loadingIcon).setVisibility(View.GONE);
+        final ArrayList<QuakeItem> items;
 
         lv = (ListView) view.findViewById(R.id.recentQuakes);
+        final ProgressBar progressBar = view.findViewById(R.id.progressBar1);
+        final LinearLayout header = view.findViewById(R.id.recent_item_list_header);
+        header.setVisibility(View.GONE);
+        final LinearLayout itemList = view.findViewById(R.id.recent_item_list_layout);
+        itemList.setVisibility(View.GONE);
+        progressBar.isIndeterminate();
         final int selectedValue = 10; // initializing in case it fails
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fillListView(items, Integer.parseInt(parent.getSelectedItem().toString()));
-                // parent.getSelectedItem().toString();
-                Log.e("SELECTED: ", parent.getSelectedItem().toString());
+
+        new Thread(new Runnable() {
+
+            ArrayList<QuakeItem> items;
+            public void run() {
+                items=data.getQuakeItems();
+                try{
+                    if (items == null){
+                        // show loading
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.VISIBLE);
+                                header.setVisibility(View.GONE);
+                                itemList.setVisibility(View.GONE);
+                            }
+                        });
+
+                    }
+                    else{
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                                header.setVisibility(View.VISIBLE);
+                                itemList.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }
+                catch(Exception ex){
+                    Log.e("THREAD BROKEN: ", ex.getMessage());
+                }
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        fillListView(items, Integer.parseInt(parent.getSelectedItem().toString()));
+                        // parent.getSelectedItem().toString();
+                        Log.e("SELECTED: ", parent.getSelectedItem().toString());
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        //fillListView(items, selectedValue);
+        }).start();
 
     }
 
