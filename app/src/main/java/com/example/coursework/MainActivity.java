@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -56,7 +57,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MainActivity extends AppCompatActivity
 {
-    private DrawerLayout drawerLayout;
+    public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle barToggle;
 
     @Override
@@ -64,11 +65,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if(savedInstanceState == null) {
-            getSupportFragmentManager().
-                    beginTransaction().replace(R.id.displayFragment, new HomeFragment()).commit();
-        }
+        boolean isInnerFragment = false;
 
         // below is setup code for the navigation menu
         drawerLayout = (DrawerLayout)findViewById(R.id.mainDrawer);
@@ -77,6 +74,21 @@ public class MainActivity extends AppCompatActivity
         barToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // code below changes hamburger menu to back button
+        if (isInnerFragment){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            barToggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+        else {
+            barToggle.setDrawerIndicatorEnabled(true);
+        }
+
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().
+                    beginTransaction().replace(R.id.displayFragment, new HomeFragment()).commit();
+        }
 
         NavigationView navigationView = findViewById(R.id.drawer);
                 navigationView.bringToFront();
@@ -121,6 +133,7 @@ public class MainActivity extends AppCompatActivity
         });
         // setup code for elements that were originally in activity_main.xml
         // have moved into home_fragment.xml
+
     }
 
     public void setActionBarTitle(String title) {
@@ -128,10 +141,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+
+
+        getSupportFragmentManager().popBackStackImmediate();
         if (barToggle.onOptionsItemSelected(item))
         {
+            Log.e("HOME BUTTON CLICKED", "NOW");
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+    
 }

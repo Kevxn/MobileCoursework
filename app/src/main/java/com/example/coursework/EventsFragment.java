@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,20 @@ public class EventsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("Nearby Events");
+
+        boolean isInnerFragment = false;
+
+        // code below changes hamburger menu to back button
+        if (isInnerFragment){
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((MainActivity) getActivity()).barToggle.setDrawerIndicatorEnabled(false);
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+        else {
+            ((MainActivity)getActivity()).barToggle.setDrawerIndicatorEnabled(true);
+        }
+
         return inflater.inflate(R.layout.events_fragment, null);
     }
 
@@ -97,9 +112,6 @@ public class EventsFragment extends Fragment {
         // start geolocation code
         requestPermission();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        Context mContext = (MainActivity)getActivity();
-        // final TextView showCoords = view.findViewById(R.id.nearby_events_show_coords);
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
             return;

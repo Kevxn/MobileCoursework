@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,20 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        boolean isInnerFragment = false;
+
+        // code below changes hamburger menu to back button
+        if (isInnerFragment){
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((MainActivity) getActivity()).barToggle.setDrawerIndicatorEnabled(false);
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+        else {
+            ((MainActivity)getActivity()).barToggle.setDrawerIndicatorEnabled(true);
+        }
+
         final TextView txtShowData = view.findViewById(R.id.txtDisplayData);
 //        final LinearLayout layout = view.findViewById(R.id.home_card_holder);
         view.findViewById(R.id.homeBtnGetData).setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +35,22 @@ public class RecentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("Recent");
+        setRetainInstance(true);
+
+        boolean isInnerFragment = false;
+
+        // code below changes hamburger menu to back button
+        if (isInnerFragment){
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((MainActivity) getActivity()).barToggle.setDrawerIndicatorEnabled(false);
+            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+        else {
+            ((MainActivity)getActivity()).barToggle.setDrawerIndicatorEnabled(true);
+            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
 
         return inflater.inflate(R.layout.recent_fragment, null);
     }
@@ -37,7 +58,6 @@ public class RecentFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // do section below on new thread
 
         spinner = (Spinner)view.findViewById(R.id.limit_results_spinner);
@@ -59,6 +79,26 @@ public class RecentFragment extends Fragment {
         itemList.setVisibility(View.GONE);
         progressBar.isIndeterminate();
         final int selectedValue = 10; // initializing in case it fails
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                Bundle quakeObject = new Bundle();
+                QuakeItem test = (QuakeItem)parent.getAdapter().getItem(position);
+                quakeObject.putSerializable("QuakeObject", new Gson().toJson(test));
+                Fragment detailedView = new DetailedQuakeViewFragment();
+                detailedView.setArguments(quakeObject);
+
+                Log.e("CLICKED: ", test.getLocation());
+
+                transaction.replace(R.id.displayFragment, detailedView);
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
 
         new Thread(new Runnable() {
