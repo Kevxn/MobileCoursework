@@ -12,15 +12,26 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+
+import org.w3c.dom.Text;
 
 public class DetailedQuakeViewFragment extends Fragment implements OnMapReadyCallback {
 
     private MapView mapView;
+    private TextView location;
+    private TextView date;
+    private TextView latlon;
+    private TextView depth;
+    private TextView magnitude;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     @Nullable
@@ -28,7 +39,6 @@ public class DetailedQuakeViewFragment extends Fragment implements OnMapReadyCal
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         boolean isInnerFragment = true;
-
 
         // code below changes hamburger menu to back button
         if (isInnerFragment){
@@ -41,16 +51,9 @@ public class DetailedQuakeViewFragment extends Fragment implements OnMapReadyCal
             ((MainActivity)getActivity()).barToggle.setDrawerIndicatorEnabled(true);
         }
 
-        String fromJson;
-        Bundle quakeItem = getArguments();
-        fromJson = quakeItem.getString("QuakeObject");
-        QuakeItem quake = new Gson().fromJson(fromJson, QuakeItem.class);
-
+        QuakeItem quake = getQuakeFromBundle();
 
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(quake.getLocation());
-
-
-
 
         return inflater.inflate(R.layout.detailed_quake_view, null);
     }
@@ -65,12 +68,50 @@ public class DetailedQuakeViewFragment extends Fragment implements OnMapReadyCal
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
 
+        QuakeItem quake = getQuakeFromBundle();
+
+        location = view.findViewById(R.id.txt_detailed_location);
+        date = view.findViewById(R.id.txt_detailed_date);
+        latlon = view.findViewById(R.id.txt_detailed_latlon);
+        depth= view.findViewById(R.id.txt_detailed_depth);
+        magnitude = view.findViewById(R.id.txt_detailed_magnitude);
+
+        location.setText(quake.getLocation());
+        date.setText(quake.getDate().toString());
+        latlon.setText("" + Float.toString(quake.getLat()) + "°, " + Float.toString(quake.getLon()) + "°");
+        depth.setText(Float.toString(quake.getDepth()) + "km Depth");
+        magnitude.setText(Float.toString(quake.getMagnitude()) + "Magnitude");
+
+        final MarkerOptions marker = new MarkerOptions();
+        final LatLng point = new LatLng(quake.getLat(), quake.getLon());
+        marker.position(point);
+
+
+        // adding point to map
+
         mapView = (MapView) view.findViewById(R.id.detailed_mapView);
         mapView.onCreate(mapViewBundle);
 
-        mapView.getMapAsync(this);
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.addMarker(marker);
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 7f));
+            }
+        });
+
+        // mapView.getMapAsync(this);
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public QuakeItem getQuakeFromBundle(){
+        String fromJson;
+        Bundle quakeItem = getArguments();
+        fromJson = quakeItem.getString("QuakeObject");
+        QuakeItem quake = new Gson().fromJson(fromJson, QuakeItem.class);
+
+        return quake;
     }
 
     @Override

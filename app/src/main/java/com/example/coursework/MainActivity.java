@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity
                                 Log.e("Pressed", "Map");
                                 fragment = new MapFragment();
                                 break;
-
                         }
 
                         if (fragment != null){
@@ -133,7 +132,6 @@ public class MainActivity extends AppCompatActivity
         });
         // setup code for elements that were originally in activity_main.xml
         // have moved into home_fragment.xml
-
     }
 
     public void setActionBarTitle(String title) {
@@ -154,5 +152,4 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-    
 }
