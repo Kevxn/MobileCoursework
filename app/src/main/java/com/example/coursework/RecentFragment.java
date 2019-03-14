@@ -1,5 +1,6 @@
 package com.example.coursework;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -37,24 +38,6 @@ public class RecentFragment extends Fragment {
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("Recent");
         setRetainInstance(true);
 
-        boolean isInnerFragment = false;
-
-        // code below changes hamburger menu to back button
-        if (isInnerFragment){
-            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((MainActivity) getActivity()).barToggle.setDrawerIndicatorEnabled(false);
-            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        }
-        else {
-            //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-            ((MainActivity)getActivity()).barToggle.setDrawerIndicatorEnabled(true);
-            //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-        }
-
         return inflater.inflate(R.layout.recent_fragment, null);
     }
 
@@ -85,21 +68,11 @@ public class RecentFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                Bundle quakeObject = new Bundle();
                 QuakeItem test = (QuakeItem)parent.getAdapter().getItem(position);
-                quakeObject.putSerializable("QuakeObject", new Gson().toJson(test));
-                Fragment detailedView = new DetailedQuakeViewFragment();
-                detailedView.setArguments(quakeObject);
-
+                Intent i = new Intent(getActivity(), DetailedQuakeViewActivity.class);
+                i.putExtra("QuakeObject", new Gson().toJson(test));
                 Log.e("CLICKED: ", test.getLocation());
-
-                // detach fragment??
-                transaction.replace(R.id.displayFragment, detailedView);
-                transaction.addToBackStack(null).commit();
+                getContext().startActivity(i);
             }
         });
 
