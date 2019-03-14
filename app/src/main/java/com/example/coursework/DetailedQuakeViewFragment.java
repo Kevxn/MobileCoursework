@@ -42,9 +42,9 @@ public class DetailedQuakeViewFragment extends Fragment implements OnMapReadyCal
 
         // code below changes hamburger menu to back button
         if (isInnerFragment){
-            ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            ((MainActivity) getActivity()).barToggle.setDrawerIndicatorEnabled(false);
+            //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((MainActivity) getActivity()).barToggle.setDrawerIndicatorEnabled(false);
             ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
         else {

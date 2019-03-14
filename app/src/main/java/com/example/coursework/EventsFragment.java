@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,6 +78,8 @@ public class EventsFragment extends Fragment {
         }
         else {
             ((MainActivity)getActivity()).barToggle.setDrawerIndicatorEnabled(true);
+            //((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
 
         return inflater.inflate(R.layout.events_fragment, null);
@@ -108,6 +113,28 @@ public class EventsFragment extends Fragment {
         final LinearLayout itemList = view.findViewById(R.id.nearby_event_item_list_layout);
         itemList.setVisibility(View.GONE);
         progressBar.isIndeterminate();
+
+        // setting up ListView onClickListener
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                Bundle quakeObject = new Bundle();
+                QuakeItem test = (QuakeItem)parent.getAdapter().getItem(position);
+                quakeObject.putSerializable("QuakeObject", new Gson().toJson(test));
+                Fragment detailedView = new DetailedQuakeViewFragment();
+                detailedView.setArguments(quakeObject);
+
+                Log.e("CLICKED: ", test.getLocation());
+
+                // detach fragment??
+                transaction.replace(R.id.displayFragment, detailedView);
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
         // start geolocation code
         requestPermission();

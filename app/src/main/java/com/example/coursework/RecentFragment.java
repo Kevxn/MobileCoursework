@@ -47,9 +47,12 @@ public class RecentFragment extends Fragment {
             ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
         else {
+            //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
             ((MainActivity)getActivity()).barToggle.setDrawerIndicatorEnabled(true);
-            ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             ((MainActivity)getActivity()).drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
         }
 
         return inflater.inflate(R.layout.recent_fragment, null);
