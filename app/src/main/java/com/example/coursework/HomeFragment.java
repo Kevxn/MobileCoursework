@@ -192,24 +192,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
-//        final TextView txtShowData = view.findViewById(R.id.txtDisplayData);
-////        final LinearLayout layout = view.findViewById(R.id.home_card_holder);
-//        view.findViewById(R.id.homeBtnGetData).setOnClickListener(new View.OnClickListener() {
-//
-//
-//            @Override
-//            public void onClick(View view){
-//
-//                Toast.makeText(getActivity(), "Getting data...", Toast.LENGTH_SHORT).show();
-//                DataInterface data = new DataInterface();
-//                data.startProgress();
-//                ArrayList<QuakeItem> items = data.getQuakeItems();
-//
-//                updateTextView(txtShowData, items);
-//            }
-//
-//        });
     }
 
     private void updateTextView(TextView txt, ArrayList<QuakeItem> quakes){
@@ -225,5 +207,4 @@ public class HomeFragment extends Fragment {
         }
         txt.setText(b.toString());
     }
-
 }
