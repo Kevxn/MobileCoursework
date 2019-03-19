@@ -201,6 +201,8 @@ public class EventsFragment extends Fragment {
     // Earths curvature into account
     private double getOrthodromicDistance(double x1, double y1, double x2, double y2){
 
+        double EARTH_RADIUS = 6371;
+
         double lon1 = Math.toRadians(x1);
         double lon2 = Math.toRadians(x2);
         double lat1 = Math.toRadians(y1);
@@ -212,9 +214,8 @@ public class EventsFragment extends Fragment {
 
         double a = Math.pow(Math.sin(distanceLat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(distanceLon / 2),2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        double earthRadiusKM = 6371;
 
-        return c * earthRadiusKM;
+        return c * EARTH_RADIUS;
     }
 
     public void fillListView(ArrayList<QuakeItem> items, int searchRadius, double userLat, double userLon){

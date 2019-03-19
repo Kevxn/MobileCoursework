@@ -1,157 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+
+    <Switch
+        android:id="@+id/toggleDateRange"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:text="Show date range "
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/salutation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Welcome to Mobile Platform Development"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/lblHomeHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="Show earthquakes on..."
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleDateRange" />
 
-        <Button
-            android:id="@+id/homeBtnGetData"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Press to get data" />
+    <Button
+        android:id="@+id/btnChooseFirstDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Choose day"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblHomeHeader" />
 
-        <TextView
-            android:id="@+id/acknowledgement"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Contains British Geological Survey materials ©NERC 2019"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/lblChosenDate1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="01/01/1970"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChooseFirstDay" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/lblSecondDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="and..."
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChooseFirstDay" />
 
-            <TextView
-                android:id="@+id/txtDisplayData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Raw Data is Displayed here"
-                android:textSize="20sp" />
+    <Button
+        android:id="@+id/btnChooseSecondDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Choose day"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblSecondDay" />
 
-        </ScrollView>
+    <TextView
+        android:id="@+id/lblChosenDate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="01/01/1970"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChooseSecondDay" />
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </ScrollView>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:rowCount="1"
-                android:scrollbars="vertical">
-
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/card_view1"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    card_view:cardBackgroundColor="@color/green"
-                    card_view:cardCornerRadius="4dp"
-                    >
-
-                    <LinearLayout
-                        android:id="@+id/home_card_holder"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_gravity="center_horizontal|center_vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/montserrat"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="Events"
-                            android:textColor="#ffffff" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/montserrat"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="View all seismic events from the British Isles and surrounding areas"
-                            android:textColor="#ffffff" />
-
-                        <!--<TextView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="50dp"-->
-                            <!--android:layout_gravity="center_vertical"-->
-                            <!--android:fontFamily="@font/montserrat"-->
-                            <!--android:gravity="center"-->
-                            <!--android:paddingTop="10dp"-->
-                            <!--android:text="Magnitude: 1.0"-->
-                            <!--android:textColor="#ffffff" />-->
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/card_view2"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="10dp"
-                    card_view:cardBackgroundColor="@color/colorPrimary"
-                    card_view:cardCornerRadius="4dp" />
-
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/card_view3"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    card_view:cardBackgroundColor="@color/green"
-                    card_view:cardCornerRadius="4dp" />
-
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/card_view4"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="10dp"
-                    card_view:cardBackgroundColor="@color/colorPrimary"
-                    card_view:cardCornerRadius="4dp" />
-
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/card_view5"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="10dp"
-                    card_view:cardBackgroundColor="@color/colorPrimary"
-                    card_view:cardCornerRadius="4dp" />
-
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/card_view6"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:layout_margin="10dp"
-                    card_view:cardBackgroundColor="@color/colorPrimary"
-                    card_view:cardCornerRadius="4dp" />
-
-            </GridLayout>
-        </ScrollView>
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnHomeSearch"
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:text="Find Earthquakes"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChooseSecondDay" />
 
 </LinearLayout>
