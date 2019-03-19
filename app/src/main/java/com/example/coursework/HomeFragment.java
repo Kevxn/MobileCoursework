@@ -14,11 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.QuickContactBadge;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,8 @@ public class HomeFragment extends Fragment {
     TextView lblChosenDate2;
     DatePickerDialog.OnDateSetListener dateSetListener1;
     DatePickerDialog.OnDateSetListener dateSetListener2;
+    Spinner greaterOrLessThanSpinner;
+    Spinner magnitudeSpinner;
 
     @Nullable
     @Override
@@ -85,6 +89,7 @@ public class HomeFragment extends Fragment {
         lblChosenDate2.setVisibility(View.GONE);
         lblSecondDay.setVisibility(View.GONE);
         btnChooseSecondDay.setVisibility(View.GONE);
+        dateRangeToggle.setText("Select dates");
 
         dateRangeToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -93,15 +98,17 @@ public class HomeFragment extends Fragment {
                     // show second date button
                     lblSecondDay.setVisibility(View.VISIBLE);
                     btnChooseSecondDay.setVisibility(View.VISIBLE);
-                    lblHomeHeader.setText("Show earthquakes between...");
-
+                    lblHomeHeader.setText("From:");
+                    lblSecondDay.setText("To:");
+                    dateRangeToggle.setText("Select day");
                 }
                 else{
                     // show only first button
                     lblSecondDay.setVisibility(View.GONE);
                     lblChosenDate2.setVisibility(View.GONE);
                     btnChooseSecondDay.setVisibility(View.GONE);
-                    lblHomeHeader.setText("Show earthquakes on...");
+                    lblHomeHeader.setText("On:");
+                    dateRangeToggle.setText("Select dates");
                 }
             }
         });

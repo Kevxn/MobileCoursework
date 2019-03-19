@@ -16,4 +16,20 @@
         <item>75</item>
         <item>100</item>
     </string-array>
+    <string-array name="greater_or_less_than">
+        <item>"&gt;"</item>
+        <item>"&lt;"</item>
+    </string-array>
+    <string-array name="magnitude_spinner">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="depth_spinner">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </string-array>
 </resources>
