@@ -2,6 +2,7 @@ package com.example.coursework;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
@@ -185,10 +188,24 @@ public class HomeFragment extends Fragment {
                 if (useEndDate){
                     // send both dates to next activity
                     Log.e("FirstDate, SecondDate: ", start.toString() + ", " + end.toString());
+
+                    Bundle options = new Bundle();
+                    options.putSerializable("FirstDate", start);
+                    options.putSerializable("EndDate", end);
+
+                    Intent i = new Intent(getActivity(), SearchResultsActivity.class);
+                    i.putExtra("SearchOptions", new Gson().toJson(options));
+                    Log.e("CLICKED: ", "Putting into bundle");
+                    getContext().startActivity(i);
                 }
                 else{
                     // send first date only to next activity
+                    Bundle options = new Bundle();
+                    options.putSerializable("Date", start);
+                    Intent intent = new Intent(getActivity(), SearchResultsActivity.class);
+                    intent.putExtra("SearchOptions", new Gson().toJson(options));
                     Log.e("FirstDate: ", start.toString());
+                    getContext().startActivity(intent);
                 }
             }
         });
