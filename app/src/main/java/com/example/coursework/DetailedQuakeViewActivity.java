@@ -38,6 +38,7 @@ public class DetailedQuakeViewActivity extends AppCompatActivity implements OnMa
         // hopefully this gives us a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         Bundle mapViewBundle = null;
         if (savedInstanceState != null){
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -46,7 +47,7 @@ public class DetailedQuakeViewActivity extends AppCompatActivity implements OnMa
         Intent intent = getIntent();
         Serializable s = intent.getSerializableExtra("QuakeObject");
         QuakeItem quake = new Gson().fromJson(intent.getSerializableExtra("QuakeObject").toString(), QuakeItem.class);
-
+        getSupportActionBar().setTitle(quake.getLocation());
 
         location = findViewById(R.id.txt_detailed_location);
         date = findViewById(R.id.txt_detailed_date);
