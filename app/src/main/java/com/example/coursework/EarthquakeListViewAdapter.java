@@ -9,11 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EarthquakeListViewAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<QuakeItem> earthquakes = new ArrayList<>();
+
     public EarthquakeListViewAdapter(Context context, ArrayList<QuakeItem> earthquakes){
         this.mContext = context;
         this.earthquakes = earthquakes;
@@ -90,7 +92,7 @@ public class EarthquakeListViewAdapter extends BaseAdapter {
         else if (mag >= 2.2 && mag < 2.5){
             txtMagnitude.setBackgroundColor(ContextCompat.getColor(mContext, R.color.red));
         }
-        else if (mag >= 2.5 && mag > 2.8){
+        else if (mag >= 2.5){
             txtMagnitude.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_red));
         }
     }

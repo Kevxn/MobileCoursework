@@ -17,7 +17,10 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class SearchResultsActivity extends AppCompatActivity {
@@ -117,7 +120,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         final LinearLayout itemList = findViewById(R.id.search_results_item_list_layout);
         final DataInterface data = new DataInterface();
-
+        data.startProgress();
         new Thread(new Runnable() {
 
             ArrayList<QuakeItem> items;
@@ -141,6 +144,12 @@ public class SearchResultsActivity extends AppCompatActivity {
                             public void run() {
                                 progressBar.setVisibility(View.GONE);
                                 itemList.setVisibility(View.VISIBLE);
+                                if (singleDay != null){
+                                    fillListView(items, searchLocation, singleDay, new Date(0));
+                                }
+                                else{
+                                    fillListView(items, searchLocation, startDate, endDate);
+                                }
                             }
                         });
                     }
@@ -168,11 +177,75 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     }
 
-    public void fillListView(){
-        ArrayList<QuakeItem> quakes = new ArrayList<>();
-        ArrayAdapter<QuakeItem> adapter = new ArrayAdapter<QuakeItem>(this, R.layout.search_results_listview_item, quakes);
+    public void fillListView(ArrayList<QuakeItem> items, String searchLocation, Date startDate, Date endDate){
+
+        boolean usingDateRange = true;
+        if (endDate == new Date(0)){
+            usingDateRange = false;
+        }
+
+        ArrayList<QuakeItem> filteredItems = new ArrayList<>();
+        QuakeItem northernly, easterly, westerly, southernly, highestMag, highestDepth;
+        QuakeItem currentMaxNorthernly, currentMaxEasterly, currentMaxWesterly, currentMaxSouthernly,
+                currentMaxMagnitude, currentMaxDepth;
+
+
+
+
+        for (QuakeItem item: items){
+            if (item.getLocation().contains(searchLocation)){
+                if (usingDateRange){
+                    if ((item.getDate().after(startDate) && item.getDate().before(endDate))){
+                        // date range search
+                        filteredItems.add(item);
+                    }
+                }
+                else{
+                    if (item.getDate().equals(startDate)){
+                        // single day search
+                        filteredItems.add(item);
+                    }
+                }
+            }
+        }
+
+        // initialize temp items
+        currentMaxNorthernly = filteredItems.get(0);
+        currentMaxEasterly = currentMaxNorthernly;
+        currentMaxSouthernly = currentMaxEasterly;
+        currentMaxWesterly = currentMaxSouthernly;
+        currentMaxMagnitude = currentMaxWesterly;
+        currentMaxDepth = currentMaxMagnitude;
+
+        for (QuakeItem item: filteredItems){
+
+                if (item.getLat() > currentMaxNorthernly.getLat()){
+                    currentMaxNorthernly = item;
+                }
+                if (item.getLat() < currentMaxSouthernly.getLat()){
+                    currentMaxSouthernly = item;
+                }
+                if (item.getLon() > currentMaxEasterly.getLon()){
+                    currentMaxEasterly = item;
+                }
+                if (item.getLon() < currentMaxWesterly.getLon()){
+                    currentMaxWesterly = item;
+                }
+                if (item.getMagnitude() > currentMaxMagnitude.getMagnitude()){
+                    currentMaxMagnitude = item;
+                }
+                if (item.getDepth() > currentMaxDepth.getDepth()){
+                    currentMaxDepth = item;
+                }
+        }
+
+        ArrayList<QuakeItem> displayItems = new ArrayList<>();
+        displayItems.addAll(Arrays.asList(currentMaxNorthernly, currentMaxSouthernly, currentMaxEasterly, currentMaxWesterly, currentMaxMagnitude, currentMaxDepth));
+
+        EarthquakeListViewAdapter adapter = new EarthquakeListViewAdapter(this, displayItems);
 
         lv.setAdapter(adapter);
+
     }
 
 }
