@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -23,17 +24,32 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     ListView lv;
     ProgressBar progressBar;
+    String searchLocation;
     Date startDate;
     Date endDate;
     Date singleDay;
+
+    TextView showLocation;
+    TextView showStart;
+    TextView showEnd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
+        boolean usingSearchBox = false;
+
         lv = findViewById(R.id.searchResults);
         progressBar = findViewById(R.id.search_progress_bar);
+        showLocation = findViewById(R.id.showLocation);
+        showStart = findViewById(R.id.showStart);
+        showEnd = findViewById(R.id.showEnd);
+
+        showLocation.setVisibility(View.GONE);
+        showStart.setVisibility(View.GONE);
+        showEnd.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         // try to get one day, else try 2
@@ -43,20 +59,50 @@ public class SearchResultsActivity extends AppCompatActivity {
             if (options.get("Date") != null){
 
                 // single day
+                if(options.getString("SearchLocation") != null){
+                    searchLocation = options.getString("SearchLocation");
+                    usingSearchBox = true;
+                    showLocation.setVisibility(View.VISIBLE);
+                    showLocation.setText(searchLocation);
+                }
+
                 double test = options.getDouble("Date");
                 singleDay = new Date((long)test);
+                showStart.setVisibility(View.VISIBLE);
+                showStart.setText(singleDay.toString());
                 Log.e("SINGLE DAY", singleDay.toString());
+
+                if (usingSearchBox){
+                    Log.e("SEARCH BOX: ", searchLocation);
+                }
             }
             else if (options.get("FirstDate") != null){
 
                 // date range
+                if(options.getString("SearchLocation") != null){
+                    searchLocation = options.getString("SearchLocation");
+                    usingSearchBox = true;
+                }
+
                 double fDate = options.getDouble("FirstDate");
                 startDate = new Date((long)fDate);
+
+                showStart.setVisibility(View.VISIBLE);
+                showStart.setText(startDate.toString());
 
                 if (options.get("EndDate") != null){
                     double eDate = options.getDouble("EndDate");
                     endDate = new Date((long) eDate);
                     Log.e("DATE RANGE", startDate.toString() + " - " + endDate.toString());
+
+                    showEnd.setVisibility(View.VISIBLE);
+                    showEnd.setText(endDate.toString());
+
+                    if (usingSearchBox){
+                        Log.e("SEARCH BOX: ", searchLocation);
+                        showLocation.setVisibility(View.VISIBLE);
+                        showLocation.setText(searchLocation);
+                    }
                 }
             }
             else {

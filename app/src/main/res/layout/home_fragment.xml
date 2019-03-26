@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchLocation" />
 
     <TextView
         android:id="@+id/lblHomeHeader"
@@ -125,7 +125,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/txtSearchLocation"
         android:layout_width="381dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

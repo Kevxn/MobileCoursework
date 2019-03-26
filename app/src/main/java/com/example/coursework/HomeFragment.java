@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.QuickContactBadge;
 import android.widget.Spinner;
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment {
     TextView lblHomeHeader;
     TextView lblChosenDate1;
     TextView lblChosenDate2;
+    EditText txtLocationSearch;
     DatePickerDialog.OnDateSetListener dateSetListener1;
     DatePickerDialog.OnDateSetListener dateSetListener2;
     Spinner greaterOrLessThanSpinner;
@@ -86,7 +88,7 @@ public class HomeFragment extends Fragment {
         lblChosenDate1 = view.findViewById(R.id.lblChosenDate1);
         lblChosenDate2 = view.findViewById(R.id.lblChosenDate2);
         lblSecondDay = view.findViewById(R.id.lblSecondDay);
-
+        txtLocationSearch = view.findViewById(R.id.txtSearchLocation);
         // make second button hidden by default
         lblChosenDate1.setVisibility(View.GONE);
         lblChosenDate2.setVisibility(View.GONE);
@@ -170,9 +172,21 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Date start = new Date(0);
                 Date end = new Date(0);
+                String searchLocation = "";
+
                 boolean useEndDate = false;
+                boolean useSeachBox = false;
+
+                if (txtLocationSearch.getText().toString() != null && txtLocationSearch.getText().toString() != ""){
+                    useSeachBox = true;
+                    searchLocation = txtLocationSearch.getText().toString();
+                }
+                else{
+                    useSeachBox = false;
+                }
 
                 try{
+
                     start = new SimpleDateFormat("dd/MM/yyyy").parse((String)lblChosenDate1.getText());
 
                     if (lblChosenDate2.getVisibility() == View.VISIBLE){
@@ -191,10 +205,14 @@ public class HomeFragment extends Fragment {
 
                     Bundle options = new Bundle();
                     // options.putSerializable("FirstDate", start);
+                    if (useSeachBox){
+                        options.putString("SearchLocation", searchLocation);
+                    }
                     options.putLong("FirstDate", start.getTime());
                     options.putLong("EndDate", end.getTime());
 
                     Intent i = new Intent(getActivity(), SearchResultsActivity.class);
+
                     i.putExtra("SearchOptions", new Gson().toJson(options));
                     Log.e("CLICKED: ", "Putting into bundle");
                     getContext().startActivity(i);
@@ -202,6 +220,9 @@ public class HomeFragment extends Fragment {
                 else{
                     // send first date only to next activity
                     Bundle options = new Bundle();
+                    if (useSeachBox){
+                        options.putString("SearchLocation", searchLocation);
+                    }
                     options.putLong("Date", start.getTime());
                     Intent intent = new Intent(getActivity(), SearchResultsActivity.class);
                     intent.putExtra("SearchOptions", new Gson().toJson(options));
