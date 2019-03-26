@@ -41,6 +41,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             if (options.get("Date") != null){
                 // single day
                 Log.e("test", options.get("Date").toString());
+                System.out.println(options.get("Date").toString());
                 singleDay = new SimpleDateFormat("dd/MM/yyyy").parse(options.get("Date").toString());
                 Log.e("SINGLE DAY", singleDay.toString());
             }
