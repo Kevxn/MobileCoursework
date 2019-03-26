@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -42,9 +44,24 @@ public class SearchResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Search Results");
+
         boolean usingSearchBox = false;
 
         lv = findViewById(R.id.searchResults);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                QuakeItem test = (QuakeItem)parent.getAdapter().getItem(position);
+                Intent i = new Intent(SearchResultsActivity.this, DetailedQuakeViewActivity.class);
+                i.putExtra("QuakeObject", new Gson().toJson(test));
+                Log.e("CLICKED: ", test.getLocation());
+                startActivity(i);
+            }
+        });
+
         progressBar = findViewById(R.id.search_progress_bar);
         showLocation = findViewById(R.id.showLocation);
         showStart = findViewById(R.id.showStart);
@@ -180,9 +197,11 @@ public class SearchResultsActivity extends AppCompatActivity {
     public void fillListView(ArrayList<QuakeItem> items, String searchLocation, Date startDate, Date endDate){
 
         boolean usingDateRange = true;
-        if (endDate == new Date(0)){
+        if (endDate.equals(new Date(0))){
             usingDateRange = false;
         }
+
+        Log.e("SEARCH LOCATION", searchLocation);
 
         ArrayList<QuakeItem> filteredItems = new ArrayList<>();
         QuakeItem northernly, easterly, westerly, southernly, highestMag, highestDepth;
@@ -193,7 +212,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
 
         for (QuakeItem item: items){
-            if (item.getLocation().contains(searchLocation)){
+            if (item.getLocation().contains(searchLocation) || searchLocation == ""){
                 if (usingDateRange){
                     if ((item.getDate().after(startDate) && item.getDate().before(endDate))){
                         // date range search
@@ -209,13 +228,16 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
         }
 
-        // initialize temp items
-        currentMaxNorthernly = filteredItems.get(0);
-        currentMaxEasterly = currentMaxNorthernly;
-        currentMaxSouthernly = currentMaxEasterly;
-        currentMaxWesterly = currentMaxSouthernly;
-        currentMaxMagnitude = currentMaxWesterly;
-        currentMaxDepth = currentMaxMagnitude;
+        try{
+            // initialize temp items
+            currentMaxNorthernly = filteredItems.get(0);
+            currentMaxEasterly = currentMaxNorthernly;
+            currentMaxSouthernly = currentMaxEasterly;
+            currentMaxWesterly = currentMaxSouthernly;
+            currentMaxMagnitude = currentMaxWesterly;
+            currentMaxDepth = currentMaxMagnitude;
+
+
 
         for (QuakeItem item: filteredItems){
 
@@ -239,6 +261,8 @@ public class SearchResultsActivity extends AppCompatActivity {
                 }
         }
 
+
+
         ArrayList<QuakeItem> displayItems = new ArrayList<>();
         displayItems.addAll(Arrays.asList(currentMaxNorthernly, currentMaxSouthernly, currentMaxEasterly, currentMaxWesterly, currentMaxMagnitude, currentMaxDepth));
 
@@ -246,6 +270,32 @@ public class SearchResultsActivity extends AppCompatActivity {
 
         lv.setAdapter(adapter);
 
+        // TODO: CHANGE SO THAT IF ONLY SEARCH IS PROVIDED, DATES ARE IGNORED.
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "No results, please adjust search criteria.", Toast.LENGTH_LONG).show();
+            Log.e("FILTERED ITEMS", "FILTERED ITEMS MAY BE EMPTY");
+        }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+    }
+
 
 }
