@@ -190,8 +190,9 @@ public class HomeFragment extends Fragment {
                     Log.e("FirstDate, SecondDate: ", start.toString() + ", " + end.toString());
 
                     Bundle options = new Bundle();
-                    options.putSerializable("FirstDate", start);
-                    options.putSerializable("EndDate", end);
+                    // options.putSerializable("FirstDate", start);
+                    options.putLong("FirstDate", start.getTime());
+                    options.putLong("EndDate", end.getTime());
 
                     Intent i = new Intent(getActivity(), SearchResultsActivity.class);
                     i.putExtra("SearchOptions", new Gson().toJson(options));
@@ -201,7 +202,7 @@ public class HomeFragment extends Fragment {
                 else{
                     // send first date only to next activity
                     Bundle options = new Bundle();
-                    options.putSerializable("Date", start);
+                    options.putLong("Date", start.getTime());
                     Intent intent = new Intent(getActivity(), SearchResultsActivity.class);
                     intent.putExtra("SearchOptions", new Gson().toJson(options));
                     Log.e("FirstDate: ", start.toString());

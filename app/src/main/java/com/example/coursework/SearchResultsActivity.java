@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
@@ -37,21 +38,25 @@ public class SearchResultsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         // try to get one day, else try 2
         try {
+
             Bundle options = new Gson().fromJson(intent.getSerializableExtra("SearchOptions").toString(), Bundle.class);
             if (options.get("Date") != null){
+
                 // single day
-                Log.e("test", options.get("Date").toString());
-                System.out.println(options.get("Date").toString());
-                singleDay = new SimpleDateFormat("dd/MM/yyyy").parse(options.get("Date").toString());
+                double test = options.getDouble("Date");
+                singleDay = new Date((long)test);
                 Log.e("SINGLE DAY", singleDay.toString());
             }
             else if (options.get("FirstDate") != null){
+
                 // date range
-                startDate = (Date) options.get("FirstDate");
-                Log.e("DATE RANGE", startDate.toString());
+                double fDate = options.getDouble("FirstDate");
+                startDate = new Date((long)fDate);
+
                 if (options.get("EndDate") != null){
-                    endDate = (Date) options.get("EndDate");
-                    Log.e("DATE RANGE", endDate.toString());
+                    double eDate = options.getDouble("EndDate");
+                    endDate = new Date((long) eDate);
+                    Log.e("DATE RANGE", startDate.toString() + " - " + endDate.toString());
                 }
             }
             else {
@@ -60,6 +65,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
         catch (Exception ex){
             Log.e("ERROR GETTING BUNDLE", ex.getMessage());
+            ex.printStackTrace();
         }
 
 
