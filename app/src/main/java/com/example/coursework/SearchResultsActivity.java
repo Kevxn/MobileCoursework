@@ -224,6 +224,9 @@ public class SearchResultsActivity extends AppCompatActivity {
                         // single day search
                         filteredItems.add(item);
                     }
+                    else{
+                        filteredItems.add(item);
+                    }
                 }
             }
         }

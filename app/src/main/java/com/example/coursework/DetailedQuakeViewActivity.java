@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class DetailedQuakeViewActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -55,8 +57,10 @@ public class DetailedQuakeViewActivity extends AppCompatActivity implements OnMa
         depth= findViewById(R.id.txt_detailed_depth);
         magnitude = findViewById(R.id.txt_detailed_magnitude);
 
+        DateFormat formattedDate = new SimpleDateFormat("dd/MM/yyyy");
+
         location.setText(quake.getLocation());
-        date.setText(quake.getDate().toString());
+        date.setText(formattedDate.format(quake.getDate()));
         latlon.setText("" + Float.toString(quake.getLat()) + "°, " + Float.toString(quake.getLon()) + "°");
         depth.setText(Float.toString(quake.getDepth()) + "km Depth");
         magnitude.setText(Float.toString(quake.getMagnitude()) + " Magnitude");

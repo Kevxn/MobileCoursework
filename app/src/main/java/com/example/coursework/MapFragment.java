@@ -155,7 +155,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                                                                 getContext().startActivity(i);
                                                             }
                                                         });
-
                                                         return view;
                                                     }
                                                 });

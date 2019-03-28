@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,9 +51,11 @@ public class EarthquakeListViewAdapter extends BaseAdapter {
         TextView txtDate = (TextView)convertView.findViewById(R.id.txt_recent_date);
         TextView txtLatLon = (TextView)convertView.findViewById(R.id.txt_recent_LatLon);
 
+        DateFormat formattedDate = new SimpleDateFormat("dd/MM/yyyy");
+
         txtLocation.setText(q.getLocation());
         txtMagnitude.setText(Float.toString(q.getMagnitude()));
-        txtDate.setText(q.getDate().toString());
+        txtDate.setText(formattedDate.format(q.getDate()));
         txtLatLon.setText(q.getLat() + "°,  " + q.getLon() + "°");
 
         float mag = q.getMagnitude();
