@@ -101,10 +101,10 @@ public class MainActivity extends AppCompatActivity
                                 Log.e("Pressed", "Home");
                                 fragment = new HomeFragment();
                                 break;
-                            case R.id.search:
-                                Log.e("Pressed", "Search");
-                                fragment = new SearchFragment();
-                                break;
+//                            case R.id.search:
+//                                Log.e("Pressed", "Search");
+//                                fragment = new SearchFragment();
+//                                break;
                             case R.id.event:
                                 Log.e("Pressed", "Event");
                                 fragment = new EventsFragment();
