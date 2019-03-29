@@ -217,7 +217,6 @@ public class SearchResultsActivity extends AppCompatActivity {
             searchLocation = "";
         }
 
-
         ArrayList<QuakeItem> filteredItems = new ArrayList<>();
         QuakeItem northernly, easterly, westerly, southernly, highestMag, highestDepth;
         QuakeItem currentMaxNorthernly, currentMaxEasterly, currentMaxWesterly, currentMaxSouthernly,
