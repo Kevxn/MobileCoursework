@@ -179,7 +179,7 @@ public class SearchFragment extends Fragment {
                 boolean useEndDate = false;
                 boolean useSeachBox = false;
 
-                if (txtLocationSearch.getText().toString() != null && txtLocationSearch.getText().toString() != ""){
+                if (txtLocationSearch.getText().toString() != null && !txtLocationSearch.getText().toString().equals("")){
                     useSeachBox = true;
                     searchLocation = txtLocationSearch.getText().toString();
                 }

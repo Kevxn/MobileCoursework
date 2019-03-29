@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -197,18 +199,29 @@ public class SearchResultsActivity extends AppCompatActivity {
     public void fillListView(ArrayList<QuakeItem> items, String searchLocation, Date startDate, Date endDate){
 
         boolean usingDateRange = true;
+        boolean searchNoDates = false;
+
         if (endDate.equals(new Date(0))){
             usingDateRange = false;
         }
 
-        Log.e("SEARCH LOCATION", searchLocation);
+        // this fixes a timezone bug, checks if dates are before 1971
+        // as dates are initialized to 01/01/1970
+        // at the moment new Date(0) returns a value in GMT+1, therefore causing problems
+        if (startDate.before(new Date(31536000)) && endDate.before(new Date(31536000))){
+            searchNoDates = true;
+        }
+
+        // searchLocation may be null
+        if (searchLocation == null){
+            searchLocation = "";
+        }
+
 
         ArrayList<QuakeItem> filteredItems = new ArrayList<>();
         QuakeItem northernly, easterly, westerly, southernly, highestMag, highestDepth;
         QuakeItem currentMaxNorthernly, currentMaxEasterly, currentMaxWesterly, currentMaxSouthernly,
                 currentMaxMagnitude, currentMaxDepth;
-
-
 
 
         for (QuakeItem item: items){
@@ -224,7 +237,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                         // single day search
                         filteredItems.add(item);
                     }
-                    else{
+                    if (searchNoDates){
                         filteredItems.add(item);
                     }
                 }
