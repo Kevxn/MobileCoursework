@@ -283,22 +283,22 @@ public class SearchResultsActivity extends AppCompatActivity {
         QuakeItem maxNorthernly, maxSouthernly, maxEasterly, maxWesterly, maxMagnitude, deepest;
 
         maxNorthernly = currentMaxNorthernly.clone(currentMaxNorthernly);
-        maxNorthernly.setDecorator("Most northernly");
+        maxNorthernly.setDecorator(" Most northernly");
 
         maxEasterly = currentMaxEasterly.clone(currentMaxEasterly);
-        maxEasterly.setDecorator("Most easterly");
+        maxEasterly.setDecorator(" Most easterly");
 
         maxSouthernly = currentMaxSouthernly.clone(currentMaxSouthernly);
-        maxSouthernly.setDecorator("Most southernly");
+        maxSouthernly.setDecorator(" Most southernly");
 
         maxWesterly = currentMaxWesterly.clone(currentMaxWesterly);
-        maxWesterly.setDecorator("Most westerly");
+        maxWesterly.setDecorator(" Most westerly");
 
         maxMagnitude = currentMaxMagnitude.clone(currentMaxMagnitude);
-        maxMagnitude.setDecorator("Highest magnitude");
+        maxMagnitude.setDecorator(" Highest magnitude");
 
         deepest = currentMaxDepth.clone(currentMaxDepth);
-        deepest.setDecorator("Deepest");
+        deepest.setDecorator(" Deepest");
 
         ArrayList<QuakeItem> displayItems = new ArrayList<>();
         displayItems.addAll(Arrays.asList(maxNorthernly, maxSouthernly, maxEasterly, maxWesterly, maxMagnitude, deepest));
