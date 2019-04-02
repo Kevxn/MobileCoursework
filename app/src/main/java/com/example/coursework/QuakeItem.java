@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class QuakeItem {
+public class QuakeItem implements Cloneable{
     public String title;
     public String description;
     public String link;
@@ -89,11 +89,11 @@ public class QuakeItem {
         this.pubDate = pubDate;
     }
 
-    public String getCategory() {
+    public String getDecorator() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setDecorator(String category) {
         this.category = category;
     }
 
@@ -222,4 +222,22 @@ public class QuakeItem {
         Log.e("typedMap", typedMap.toString());
         return typedMap;
     }
+
+     public QuakeItem clone(QuakeItem original) {
+         try {
+             final QuakeItem result = (QuakeItem) super.clone();
+
+             result.setLocation(original.getLocation());
+             result.setLat(original.getLat());
+             result.setLon(original.getLon());
+             result.setMagnitude(original.getMagnitude());
+             result.setDepth(original.getDepth());
+             result.setDecorator(original.getDecorator());
+             result.setDate(original.getDate());
+
+             return result;
+         } catch (final CloneNotSupportedException ex) {
+             throw new AssertionError();
+         }
+     }
 }

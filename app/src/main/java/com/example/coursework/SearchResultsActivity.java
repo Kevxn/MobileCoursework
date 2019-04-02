@@ -276,12 +276,35 @@ public class SearchResultsActivity extends AppCompatActivity {
                 }
         }
 
+        /* this code isn't ideal, however it solves an issue when
+           the same earthquake is for example the most northenly
+           AND the most easterly */
 
+        QuakeItem maxNorthernly, maxSouthernly, maxEasterly, maxWesterly, maxMagnitude, deepest;
+
+        maxNorthernly = currentMaxNorthernly.clone(currentMaxNorthernly);
+        maxNorthernly.setDecorator("Most northernly");
+
+        maxEasterly = currentMaxEasterly.clone(currentMaxEasterly);
+        maxEasterly.setDecorator("Most easterly");
+
+        maxSouthernly = currentMaxSouthernly.clone(currentMaxSouthernly);
+        maxSouthernly.setDecorator("Most southernly");
+
+        maxWesterly = currentMaxWesterly.clone(currentMaxWesterly);
+        maxWesterly.setDecorator("Most westerly");
+
+        maxMagnitude = currentMaxMagnitude.clone(currentMaxMagnitude);
+        maxMagnitude.setDecorator("Highest magnitude");
+
+        deepest = currentMaxDepth.clone(currentMaxDepth);
+        deepest.setDecorator("Deepest");
 
         ArrayList<QuakeItem> displayItems = new ArrayList<>();
-        displayItems.addAll(Arrays.asList(currentMaxNorthernly, currentMaxSouthernly, currentMaxEasterly, currentMaxWesterly, currentMaxMagnitude, currentMaxDepth));
+        displayItems.addAll(Arrays.asList(maxNorthernly, maxSouthernly, maxEasterly, maxWesterly, maxMagnitude, deepest));
 
-        EarthquakeListViewAdapter adapter = new EarthquakeListViewAdapter(this, displayItems);
+        //EarthquakeListViewAdapter adapter = new EarthquakeListViewAdapter(this, displayItems);
+        SearchResultsListViewAdapter adapter = new SearchResultsListViewAdapter(this, displayItems);
 
         lv.setAdapter(adapter);
 

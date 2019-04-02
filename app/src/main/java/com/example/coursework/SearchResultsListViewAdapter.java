@@ -2,7 +2,6 @@ package com.example.coursework;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +11,13 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class EarthquakeListViewAdapter extends BaseAdapter {
+public class SearchResultsListViewAdapter extends BaseAdapter {
 
     Context mContext;
     ArrayList<QuakeItem> earthquakes = new ArrayList<>();
 
-    public EarthquakeListViewAdapter(Context context, ArrayList<QuakeItem> earthquakes){
+    public SearchResultsListViewAdapter(Context context, ArrayList<QuakeItem> earthquakes){
         this.mContext = context;
         this.earthquakes = earthquakes;
     }
@@ -43,17 +41,19 @@ public class EarthquakeListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null){
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.recent_listview_item, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.search_results_listview_item, parent, false);
         }
 
         QuakeItem q = (QuakeItem)getItem(position);
-        TextView txtLocation = (TextView)convertView.findViewById(R.id.txt_recent_Location);
-        TextView txtMagnitude = (TextView)convertView.findViewById(R.id.txt_recent_magnitude);
-        TextView txtDate = (TextView)convertView.findViewById(R.id.txt_recent_date);
-        TextView txtLatLon = (TextView)convertView.findViewById(R.id.txt_recent_LatLon);
+        TextView lblDecorator = (TextView)convertView.findViewById(R.id.lblDecorator);
+        TextView txtLocation = (TextView)convertView.findViewById(R.id.txt_nearby_event_Location);
+        TextView txtMagnitude = (TextView)convertView.findViewById(R.id.txt_nearby_event_magnitude);
+        TextView txtDate = (TextView)convertView.findViewById(R.id.txt_nearby_event_date);
+        TextView txtLatLon = (TextView)convertView.findViewById(R.id.txt_nearby_event_LatLon);
 
         DateFormat formattedDate = new SimpleDateFormat("dd/MM/yyyy");
 
+        lblDecorator.setText(q.getDecorator());
         txtLocation.setText(q.getLocation());
         txtMagnitude.setText(Float.toString(q.getMagnitude()));
         txtDate.setText(formattedDate.format(q.getDate()));

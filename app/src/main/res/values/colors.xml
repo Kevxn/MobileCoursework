@@ -108,6 +108,8 @@
     <color name="chartreuse">#7FFF00</color>
     <color name="lawn_green">#7CFC00</color>
     <color name="medium_slate_blue">#7B68EE</color>
+    <color name="deep_purple">#5500cc</color>
+    <color name="soft_lavender">#ab70ff</color>
     <color name="light_slate_gray">#778899</color>
     <color name="slate_gray">#708090</color>
     <color name="olive_drab">#6B8E23</color>
@@ -122,6 +124,12 @@
     <color name="dark_slate_blue">#483D8B</color>
     <color name="steel_blue">#4682B4</color>
     <color name="royal_blue">#4169E1</color>
+
+    <color name="menu_blue">#B8EBFC</color>
+    <color name="main_blue">#39B8E3</color>
+    <color name="lighter_blue">#4FCEF9</color>
+    <color name="lightest_blue">#72D8FA</color>
+
     <color name="turquoise">#40E0D0</color>
     <color name="medium_sea_green">#3CB371</color>
     <color name="lime_green">#32CD32</color>

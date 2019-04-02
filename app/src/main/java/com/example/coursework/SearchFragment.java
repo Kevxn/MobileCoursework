@@ -1,5 +1,6 @@
 package com.example.coursework;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -129,8 +130,8 @@ public class SearchFragment extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), android.R.style.Theme_Black_NoTitleBar_Fullscreen, dateSetListener1, year, month, day);
-                datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), R.style.date_picker_theme, dateSetListener1, year, month, day);
+                // datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePicker.show();
             }
         });
@@ -143,8 +144,8 @@ public class SearchFragment extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), android.R.style.Theme_Black_NoTitleBar_Fullscreen, dateSetListener2, year, month, day);
-                datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), R.style.date_picker_theme, dateSetListener2, year, month, day);
+                // datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePicker.show();
             }
         });
