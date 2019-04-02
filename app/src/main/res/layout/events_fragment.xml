@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:textSize="16dp"
             android:textColor="@color/black"
-            android:text="Show event radius (km): " />
+            android:text="@string/events_radius_label" />
 
         <Spinner
             android:id="@+id/nearby_radius_spinner"

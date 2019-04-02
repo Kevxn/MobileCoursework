@@ -2,6 +2,9 @@
     <string name="app_name">coursework</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="events_radius_label">Show event radius (km): </string>
+    <string name="recent_limit_label">Show most recent...</string>
+
     <string-array name="recent_limiter">
         <item>10</item>
         <item>25</item>
