@@ -11,8 +11,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:scrollHorizontally="false"
             android:id="@+id/txt_recent_Location"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
@@ -21,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/black"
-            android:gravity="center"
+
             android:drawableLeft="@drawable/ic_baseline_location_on_24px"
             android:drawablePadding="2dp"
             tools:context=".MainActivity" />
@@ -33,12 +34,12 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="01/01/1970"
-            android:textSize="16dp"
-            android:textColor="@color/black"
-            android:gravity="center"
             android:drawableLeft="@drawable/ic_baseline_date_range_24px"
             android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="01/01/1970"
+            android:textColor="@color/black"
+            android:textSize="16dp"
             app:layout_constraintBottom_toTopOf="@+id/txt_recent_LatLon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_recent_Location" />
@@ -49,30 +50,29 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="16dp"
+            android:drawableLeft="@drawable/ic_baseline_gps_fixed_24px"
+            android:drawablePadding="4dp"
+            android:gravity="center"
             android:text="55.765, -4.752"
+            android:textColor="@color/black"
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="50dp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:drawablePadding="4dp"
-            android:drawableLeft="@drawable/ic_baseline_gps_fixed_24px" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/txt_recent_magnitude"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="21dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:paddingBottom="15dp"
             android:text="4.5"
             android:textAlignment="center"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginBottom="15dp"
-            app:layout_constraintDimensionRatio="1:1" />
+            app:layout_goneMarginBottom="15dp" />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

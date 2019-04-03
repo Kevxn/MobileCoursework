@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/bg_gradient"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         />
 
     <LinearLayout
@@ -45,27 +45,39 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/nearby_event_no_quakes_found"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:text="Couldn't find any earthquakes in "
-        android:visibility="gone" />
-
     <LinearLayout
-        android:id="@+id/nearby_event_item_list_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="382dp"
+        android:layout_height="580dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_linear_layout"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/recentNearbyEvents"
+        <TextView
+            android:id="@+id/nearby_event_no_quakes_found"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp" />
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="Couldn't find any earthquakes in "
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/nearby_event_item_list_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+
+            <ListView
+                android:id="@+id/recentNearbyEvents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
