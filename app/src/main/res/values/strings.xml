@@ -5,6 +5,18 @@
     <string name="events_radius_label">Show event radius (km): </string>
     <string name="recent_limit_label">Show most recent...</string>
 
+    <!--Home Fragment -->
+    <string name="earthquakes_nearby_card">Earthquakes Nearby</string>
+    <string name="earthquakes_search_card">Search Earthquakes</string>
+    <string name="earthquakes_recent_card">Recent Earthquakes</string>
+    <string name="earthquakes_map_card">Map</string>
+
+    <string name="earthquakes_nearby_card_text">View earthquakes near you.</string>
+    <string name="earthquakes_search_card_text">Filter earthquakes by name, date.</string>
+    <string name="earthquakes_recent_card_text">Shows most recent earthquakes</string>
+    <string name="earthquakes_map_card_text">View all earthquakes around British Isles</string>
+    <!--End of Home Fragment -->
+
     <string-array name="recent_limiter">
         <item>10</item>
         <item>25</item>

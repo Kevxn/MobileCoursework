@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
-                    android:text="Earthquakes Nearby"
+                    android:text="@string/earthquakes_nearby_card"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
-                    android:text="View earthquakes near you."
+                    android:text="@string/earthquakes_nearby_card_text"
                     android:textColor="@color/black" />
 
             </LinearLayout>
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
-                    android:text="Search Earthquakes"
+                    android:text="@string/earthquakes_search_card"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -99,7 +99,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
-                    android:text="Filter earthquakes by name, date."
+                    android:text="@string/earthquakes_search_card_text"
                     android:textColor="@color/black" />
 
             </LinearLayout>
@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
-                    android:text="Recent Earthquakes"
+                    android:text="@string/earthquakes_recent_card"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -156,7 +156,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
-                    android:text="Shows most recent earthquakes"
+                    android:text="@string/earthquakes_recent_card_text"
                     android:textColor="@color/black" />
 
             </LinearLayout>
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
-                    android:text="Map"
+                    android:text="@string/earthquakes_map_card"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -201,7 +201,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
-                    android:text="View all earthquakes around British Isles"
+                    android:text="@string/earthquakes_map_card_text"
                     android:textColor="@color/black" />
 
             </LinearLayout>
