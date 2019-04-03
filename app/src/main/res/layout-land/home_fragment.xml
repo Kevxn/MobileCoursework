@@ -35,25 +35,35 @@
         <!--app:layout_constraintEnd_toEndOf="parent"-->
         <!--app:layout_constraintStart_toStartOf="parent" />-->
 
+    <!--<LinearLayout-->
+        <!--android:id="@+id/linearLayout"-->
+        <!--android:layout_width="650dp"-->
+        <!--android:layout_height="600dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:background="@drawable/rounded_linear_layout"-->
+        <!--android:orientation="vertical"-->
+        <!--android:paddingTop="8dp"-->
+        <!--android:paddingBottom="8dp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.489"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"></LinearLayout>-->
+
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="382dp"
-        android:layout_height="600dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_linear_layout"
+        android:id="@+id/leftColumn"
+        android:layout_width="325dp"
+        android:layout_height="360dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="145dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
@@ -96,7 +106,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="145dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
@@ -138,9 +148,21 @@
 
         </android.support.v7.widget.CardView>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="325dp"
+        android:layout_height="360dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="41dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/leftColumn"
+        app:layout_constraintTop_toTopOf="parent">
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="145dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
@@ -184,7 +206,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="145dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
