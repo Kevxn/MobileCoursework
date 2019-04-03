@@ -42,6 +42,8 @@ public class EventsFragment extends Fragment {
     Spinner spinner;
     ListView lv;
     TextView noQuakeFoundLabel;
+    LinearLayout itemList;
+    LinearLayout listContainer;
     double lat;
 
     public double getLat() {
@@ -92,11 +94,12 @@ public class EventsFragment extends Fragment {
 
         lv = (ListView) view.findViewById(R.id.recentNearbyEvents);
         noQuakeFoundLabel = (TextView) view.findViewById(R.id.nearby_event_no_quakes_found);
+        listContainer = view.findViewById(R.id.list_container);
 
         final ProgressBar progressBar = view.findViewById(R.id.nearbyEventsLoading);
         final LinearLayout header = view.findViewById(R.id.nearby_event_item_list_header);
         header.setVisibility(View.GONE);
-        final LinearLayout itemList = view.findViewById(R.id.nearby_event_item_list_layout);
+        itemList = view.findViewById(R.id.nearby_event_item_list_layout);
         itemList.setVisibility(View.GONE);
         progressBar.isIndeterminate();
 
@@ -243,9 +246,11 @@ public class EventsFragment extends Fragment {
         if (adapter.getCount() == 0){
             noQuakeFoundLabel.setText("Couldn't find any earthquakes in a " + Double.toString(searchRadius) + "km radius.");
             noQuakeFoundLabel.setVisibility(View.VISIBLE);
+            listContainer.setVisibility(View.GONE);
         }
         else{
             lv.setAdapter(adapter);
+            listContainer.setVisibility(View.VISIBLE);
             noQuakeFoundLabel.setVisibility(View.GONE);
         }
     }
