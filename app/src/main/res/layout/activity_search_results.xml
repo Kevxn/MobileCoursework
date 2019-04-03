@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_gradient"
     tools:context=".SearchResultsActivity">
 
     <ProgressBar
@@ -19,24 +20,24 @@
 
     <!-- temporary because logcat decides to randomly stop working -->
 
-    <TextView
-        android:id="@+id/showLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="this is a test"
-        android:textSize="18dp"/>
-    <TextView
-        android:id="@+id/showStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="this is a test"
-        android:textSize="18dp"/>
-    <TextView
-        android:id="@+id/showEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="this is a test"
-        android:textSize="18dp"/>
+    <!--<TextView-->
+        <!--android:id="@+id/showLocation"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="this is a test"-->
+        <!--android:textSize="18dp"/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/showStart"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="this is a test"-->
+        <!--android:textSize="18dp"/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/showEnd"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="this is a test"-->
+        <!--android:textSize="18dp"/>-->
 
     <!-- end of temporary -->
 
@@ -45,14 +46,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_linear_layout">
 
         <ListView
             android:id="@+id/searchResults"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp" />
+            tools:layout_editor_absoluteY="8dp"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 
