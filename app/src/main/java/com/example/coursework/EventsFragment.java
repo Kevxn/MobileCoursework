@@ -68,7 +68,7 @@ public class EventsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Nearby Events");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Nearby Events (S1715611)");
 
         return inflater.inflate(R.layout.events_fragment, null);
     }

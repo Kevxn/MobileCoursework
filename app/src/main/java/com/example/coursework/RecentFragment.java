@@ -35,7 +35,7 @@ public class RecentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Recent");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Recent (S1715611)");
         setRetainInstance(true);
 
         return inflater.inflate(R.layout.recent_fragment, null);

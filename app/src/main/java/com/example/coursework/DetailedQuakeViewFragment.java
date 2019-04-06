@@ -53,7 +53,7 @@ public class DetailedQuakeViewFragment extends Fragment implements OnMapReadyCal
 
         QuakeItem quake = getQuakeFromBundle();
 
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle(quake.getLocation());
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(quake.getLocation() + " (S1715611)");
 
         return inflater.inflate(R.layout.detailed_quake_view, null);
     }

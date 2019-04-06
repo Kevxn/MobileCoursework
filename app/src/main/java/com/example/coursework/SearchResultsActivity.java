@@ -47,7 +47,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_results);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Search Results");
+        getSupportActionBar().setTitle("Search Results (S1715611)");
 
         boolean usingSearchBox = false;
 

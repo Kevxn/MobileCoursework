@@ -41,7 +41,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Map");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Map (S1715611)");
 
         boolean isInnerFragment = false;
 

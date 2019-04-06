@@ -49,7 +49,7 @@ public class DetailedQuakeViewActivity extends AppCompatActivity implements OnMa
         Intent intent = getIntent();
         Serializable s = intent.getSerializableExtra("QuakeObject");
         QuakeItem quake = new Gson().fromJson(intent.getSerializableExtra("QuakeObject").toString(), QuakeItem.class);
-        getSupportActionBar().setTitle(quake.getLocation());
+        getSupportActionBar().setTitle(quake.getLocation() + " (S1715611)");
 
         location = findViewById(R.id.txt_detailed_location);
         date = findViewById(R.id.txt_detailed_date);

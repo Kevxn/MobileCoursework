@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Home");
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Home (S1715611)");
 
         return inflater.inflate(R.layout.home_fragment, null);
     }
