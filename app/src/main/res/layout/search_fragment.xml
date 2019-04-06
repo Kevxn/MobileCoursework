@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
+                    android:layout_margin="8dp"
                     android:gravity="center"
                     android:text="Date range: "
                     android:textSize="24sp"
@@ -80,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
                 android:gravity="center">
 
                 <TextView
@@ -88,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:layout_margin="8dp"
                     android:text="From: "
                     android:textSize="18sp"
                     android:paddingRight="30dp"/>
@@ -99,6 +101,7 @@
                     android:layout_gravity="center"
                     android:text="01/01/1970"
                     android:textSize="18sp"
+                    android:layout_margin="8dp"
                     />
 
                 <Button
@@ -112,14 +115,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/toggleDateRange"
                     android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:layout_margin="8dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_margin="8dp">
 
                 <TextView
                     android:id="@+id/lblSecondDay"
@@ -127,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:layout_margin="8dp"
                     android:text="To: "
                     android:textSize="18sp"
                     android:paddingRight="48dp"/>
@@ -138,6 +144,7 @@
                     android:layout_gravity="center"
                     android:text="01/01/1970"
                     android:textSize="18sp"
+                    android:layout_margin="8dp"
                     />
 
                 <Button
@@ -151,13 +158,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/toggleDateRange"
                     android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="15dp"
+                    android:layout_margin="8dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_margin="8dp">
 
                 <Button
                     android:id="@+id/btnHomeSearch"
