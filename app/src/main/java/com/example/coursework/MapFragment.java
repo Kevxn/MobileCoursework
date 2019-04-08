@@ -19,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -37,6 +39,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     MapView map;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private FusedLocationProviderClient client;
 
     @Nullable
     @Override
@@ -67,6 +70,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         if (savedInstanceState != null){
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
+
+        requestPermission();
+        client = LocationServices.getFusedLocationProviderClient(getActivity());
 
         final DataInterface data = new DataInterface();
         data.startProgress();
@@ -178,6 +184,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 }
             }
         }).start();
+    }
+
+    private void requestPermission(){
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
     @Override

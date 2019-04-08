@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static android.support.v4.content.ContextCompat.checkSelfPermission;
+
 public class EventsFragment extends Fragment {
 
     Spinner spinner;
@@ -45,6 +47,7 @@ public class EventsFragment extends Fragment {
     LinearLayout itemList;
     LinearLayout listContainer;
     double lat;
+    boolean locationAllowed = false;
 
     public double getLat() {
         return lat;
@@ -119,17 +122,15 @@ public class EventsFragment extends Fragment {
         requestPermission();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
-            return;
+        if (checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            //return;
+
         }
+
         client.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null){
-                    String lat = Double.toString(location.getLatitude());
-                    String lon = Double.toString(location.getLongitude());
-                    // Toast.makeText(getActivity(), lat + ", " + lon, Toast.LENGTH_SHORT).show();
-                    // showCoords.setText(lat + ", " + lon);
                     setLat(location.getLatitude());
                     setLon(location.getLongitude());
                 }
@@ -155,7 +156,7 @@ public class EventsFragment extends Fragment {
                         });
 
                     }
-                    else{
+                    else if (items != null){
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -174,7 +175,10 @@ public class EventsFragment extends Fragment {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        //if (checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                         fillListView(items, Integer.parseInt(parent.getSelectedItem().toString()), getLat(), getLon());
+
                         // parent.getSelectedItem().toString();
                         Log.e("SELECTED: ", parent.getSelectedItem().toString());
                         Log.e("LAT FROM DEVICE: ", Double.toString(getLat()));
@@ -187,12 +191,29 @@ public class EventsFragment extends Fragment {
                     }
                 });
             }
-
         }).start();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                }
+            }
+            else{
+                Toast.makeText(getContext(), "Location permission denied, unable to locate user.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
     private void requestPermission(){
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     }
 
     // this function calculates the distance between 2 points on a 2D plane
@@ -215,15 +236,13 @@ public class EventsFragment extends Fragment {
         double distanceLon = lon2 - lon1;
         double distanceLat = lat2 - lat1;
 
-        double a = Math.pow(Math.sin(distanceLat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(distanceLon / 2),2);
+        double a = Math.pow(Math.sin(distanceLat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(distanceLon / 2), 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
         return c * EARTH_RADIUS;
     }
 
     public void fillListView(ArrayList<QuakeItem> items, int searchRadius, double userLat, double userLon){
-
-        // int selectedValue = 50;
 
         Collections.sort(items, new Comparator<QuakeItem>() {
             @Override
@@ -232,7 +251,6 @@ public class EventsFragment extends Fragment {
             }
         });
 
-        // items = new ArrayList<QuakeItem>(items.subList(0, selectedValue));
         ArrayList<QuakeItem> displayItems = new ArrayList<>();
         for(QuakeItem i: items){
             double distance = getOrthodromicDistance(userLat, userLon, i.getLat(), i.getLon());

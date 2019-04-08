@@ -57,36 +57,8 @@ public class QuakeItem implements Cloneable{
         this.date = date;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getPubDate() {
-        return pubDate;
-    }
-
-    public void setPubDate(String pubDate) {
-        this.pubDate = pubDate;
     }
 
     public String getDecorator() {
@@ -156,13 +128,17 @@ public class QuakeItem implements Cloneable{
         return temp;
     }
 
+    /*
+    * The purpose of the method below is to convert the raw parsed XML
+    * into its appropriate Java data type. For example, dates are converted to Date
+    * objects, lat/lon's are converted to floats etc. This is to allow for
+    * easier use of QuakeItem objects throughout development.
+    * */
     private HashMap<Object, Object> rawDataToJavaDataType(HashMap<String, String> map){
 
         HashMap<Object, Object> typedMap = new HashMap<>();
 
         for (HashMap.Entry<String, String> entry : map.entrySet()){
-            // if date
-            //Log.e("???", entry.getKey());
 
             if ("Origin date/time".equals(entry.getKey())){
 
@@ -187,12 +163,6 @@ public class QuakeItem implements Cloneable{
             }
 
             else if ("Lat/long".equals(entry.getKey())){
-
-                // splitting key
-                String[] latAndLong = entry.getKey().split("/");
-                String lat = latAndLong[0];
-                String lon = latAndLong[1];
-
                 //splitting value
                 try{
                     // trying to parse from String to float
@@ -223,6 +193,9 @@ public class QuakeItem implements Cloneable{
         return typedMap;
     }
 
+    // this function creates a copy of the original QuakeItem by value
+    // as the Java default is by reference (modifies the original)
+    // which sometimes causes undesirable behaviour
      public QuakeItem clone(QuakeItem original) {
          try {
              final QuakeItem result = (QuakeItem) super.clone();
