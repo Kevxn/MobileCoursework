@@ -224,7 +224,7 @@ public class SearchResultsActivity extends AppCompatActivity {
 
 
         for (QuakeItem item: items){
-            if (item.getLocation().contains(searchLocation) || searchLocation == ""){
+            if (item.getLocation().toLowerCase().contains(searchLocation) || item.getLocation().contains(searchLocation.toUpperCase()) || searchLocation == ""){
                 if (usingDateRange){
                     if ((item.getDate().after(startDate) && item.getDate().before(endDate))){
                         // date range search
