@@ -92,9 +92,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-//                                progressBar.setVisibility(View.VISIBLE);
-//                                header.setVisibility(View.GONE);
-//                                itemList.setVisibility(View.GONE);
+
                             }
                         });
                     }
@@ -102,16 +100,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-//                                progressBar.setVisibility(View.GONE);
-//                                header.setVisibility(View.VISIBLE);
-//                                itemList.setVisibility(View.VISIBLE);
+
                                 for (final QuakeItem item: items) {
                                     final float lat = item.getLat();
                                     float lon = item.getLon();
 
                                     final LatLng point = new LatLng(lat, lon);
-                                    //MarkerOptions markerOptions = new MarkerOptions();
-
 
                                     map.getMapAsync(new OnMapReadyCallback() {
                                         @Override
@@ -141,7 +135,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                                                         TextView datetime = view.findViewById(R.id.txt_map_date);
                                                         TextView latlon = view.findViewById(R.id.txt_map_LatLon);
                                                         TextView magnitude = view.findViewById(R.id.txt_map_magnitude);
-                                                        // Button btnViewEarthquake = view.findViewById(R.id.btn_map_view_earthquake);
+
 
                                                         setQuakeColour(magnitude, quake.getMagnitude());
                                                         DateFormat formattedDate = new SimpleDateFormat("dd/MM/yyyy");

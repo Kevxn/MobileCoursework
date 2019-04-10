@@ -159,8 +159,6 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-
-
         getSupportFragmentManager().popBackStackImmediate();
         if (barToggle.onOptionsItemSelected(item))
         {

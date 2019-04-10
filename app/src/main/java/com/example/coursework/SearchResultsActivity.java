@@ -36,11 +36,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     Date endDate;
     Date singleDay;
 
-    TextView showLocation;
-    TextView showStart;
-    TextView showEnd;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,14 +60,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         });
 
         progressBar = findViewById(R.id.search_progress_bar);
-//        showLocation = findViewById(R.id.showLocation);
-//        showStart = findViewById(R.id.showStart);
-//        showEnd = findViewById(R.id.showEnd);
-//
-//        showLocation.setVisibility(View.GONE);
-//        showStart.setVisibility(View.GONE);
-//        showEnd.setVisibility(View.GONE);
-
         Intent intent = getIntent();
         // try to get one day, else try 2
         try {
@@ -84,14 +71,10 @@ public class SearchResultsActivity extends AppCompatActivity {
                 if(options.getString("SearchLocation") != null){
                     searchLocation = options.getString("SearchLocation");
                     usingSearchBox = true;
-//                    showLocation.setVisibility(View.VISIBLE);
-//                    showLocation.setText(searchLocation);
                 }
 
                 double test = options.getDouble("Date");
                 singleDay = new Date((long)test);
-//                showStart.setVisibility(View.VISIBLE);
-//                showStart.setText(singleDay.toString());
                 Log.e("SINGLE DAY", singleDay.toString());
 
                 if (usingSearchBox){
@@ -109,21 +92,14 @@ public class SearchResultsActivity extends AppCompatActivity {
                 double fDate = options.getDouble("FirstDate");
                 startDate = new Date((long)fDate);
 
-//                showStart.setVisibility(View.VISIBLE);
-//                showStart.setText(startDate.toString());
-
                 if (options.get("EndDate") != null){
                     double eDate = options.getDouble("EndDate");
                     endDate = new Date((long) eDate);
                     Log.e("DATE RANGE", startDate.toString() + " - " + endDate.toString());
 
-//                    showEnd.setVisibility(View.VISIBLE);
-//                    showEnd.setText(endDate.toString());
-
                     if (usingSearchBox){
                         Log.e("SEARCH BOX: ", searchLocation);
-//                        showLocation.setVisibility(View.VISIBLE);
-//                        showLocation.setText(searchLocation);
+
                     }
                 }
             }
@@ -177,19 +153,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                     Log.e("THREAD BROKEN: ", ex.getMessage());
                 }
 
-//                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-////                    @Override
-////                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-////                        fillListView(items, Integer.parseInt(parent.getSelectedItem().toString()));
-////                        // parent.getSelectedItem().toString();
-////                        Log.e("SELECTED: ", parent.getSelectedItem().toString());
-////                    }
-////
-////                    @Override
-////                    public void onNothingSelected(AdapterView<?> parent) {
-////
-////                    }
-////                });
             }
 
         }).start();
